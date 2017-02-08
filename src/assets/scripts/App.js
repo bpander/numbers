@@ -1,4 +1,5 @@
-import $ from 'jquery';
+import Inferno from 'inferno';
+
 
 /**
  * Application setup
@@ -6,7 +7,10 @@ import $ from 'jquery';
  * @class App
  */
 export default class App {
-    constructor() {
-        $('.js-welcome').text('Welcome to the client-side boilerplate!');
-    }
-}
+  constructor() {
+    Inferno.render(
+      <div>Welcome to the client-side boilerplate!</div>,
+      document.querySelector('.js-welcome'),
+    );
+  }
+};
