@@ -182,7 +182,7 @@
     # WHITESPACE <https://github.com/thenerdery/javascript-standards#whitespace>
     ###############################################################################################
 
-    "indent": [2, 4, {"SwitchCase": 1}],          # Require 4-space indents
+    "indent": [2, 2, {"SwitchCase": 1}],          # Require 4-space indents
     "space-before-blocks": [2, "always"],         # Require space before blocks
     "space-infix-ops": 2,                         # Require spaces around infix operators
     "newline-per-chained-call": [2, {             # Require newline per chained method call
@@ -190,7 +190,7 @@
     }],
     "no-whitespace-before-property": 2,           # Disallow whitespace before properties
     "space-in-parens": [2, "never"],              # Disallow spaces inside of parentheses
-    "array-bracket-spacing": [2, "never"],        # Disallow spaces inside of brackets
+    "array-bracket-spacing": [2, "always"],       # Require spaces inside of brackets
     "object-curly-spacing": [2, "always"],        # Require spaces inside object curly braces
     "max-len": [2, {                              # Disallow lines over 100 characters
       "code": 100,
