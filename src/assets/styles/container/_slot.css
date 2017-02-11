@@ -1,0 +1,38 @@
+
+.slot {
+  position: relative;
+  background: #bbbbbb;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+  color: #777777;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.25);
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  font-size: 6vw;
+  cursor: pointer;
+}
+
+.slot__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slot__other {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+@media (min-width: 500px) {
+  .tile {
+    font-size: 30px;
+  }
+}

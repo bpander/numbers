@@ -13,6 +13,7 @@
 
 /* Containers */
 @import "container/_console";
+@import "container/_slot";
 @import "container/_tile";
 
 /* Content */
