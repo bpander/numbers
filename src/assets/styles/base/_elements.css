@@ -2,6 +2,11 @@
  Elements Styles
 ------------------------------------------------------------------------ */
 body {
+  box-sizing: border-box;
   font-family: 'Roboto Slab', serif;
   letter-spacing: 0.01em;
+}
+
+* {
+  box-sizing: inherit;
 }
