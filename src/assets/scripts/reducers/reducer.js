@@ -1,4 +1,5 @@
 import { flatten, pullAt, times } from 'lodash';
+import * as ActionTypes from 'constants/ActionTypes';
 import randomInt from 'util/randomInt';
 
 
@@ -15,14 +16,18 @@ const twoBigRestSmall = () => {
 
 const initialState = {
   equations: [],
+  dragIndex: -1,
   numbers: twoBigRestSmall(),
   target: randomInt(101, 999),
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'foo':
-      return { ...state, didFoo: true };
+    case ActionTypes.START_DRAG:
+      return { ...state, dragIndex: action.payload.index };
+
+    case ActionTypes.STOP_DRAG:
+      return { ...state, dragIndex: -1 };
   }
   return state;
 };

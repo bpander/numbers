@@ -1,2 +1,5 @@
+import * as ActionTypes from 'constants/ActionTypes';
 
-export const foo = () => ({ type: 'foo', payload: 'bar' });
+
+export const startDrag = index => ({ type: ActionTypes.START_DRAG, payload: { index } });
+export const stopDrag = () => ({ type: ActionTypes.STOP_DRAG });
