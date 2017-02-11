@@ -9,6 +9,8 @@ import apply from 'postcss-apply';
 import browserSync from 'browser-sync';
 import cleanCSS from 'gulp-clean-css';
 import cssnext from 'postcss-cssnext';
+import postcssFor from 'postcss-for';
+import postcssSimpleVars from 'postcss-simple-vars';
 import discardComments from 'postcss-discard-comments';
 import gulp from 'gulp';
 import gulpIf from 'gulp-if';
@@ -21,6 +23,8 @@ const processors = [
     discardComments,
     apply,
     cssnext,
+    postcssFor,
+    postcssSimpleVars,
 ];
 
 function watchStyles() {

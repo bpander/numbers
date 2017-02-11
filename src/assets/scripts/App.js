@@ -37,6 +37,12 @@ export default class App extends Component {
 
   render() {
     const { numbers, target } = this.state;
-    return <NumbersGame numbers={numbers} target={target} />;
+    return (
+      <div className="wrap">
+        <div className="well well--2x">
+          <NumbersGame numbers={numbers} target={target} />
+        </div>
+      </div>
+    );
   }
 };

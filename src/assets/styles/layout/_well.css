@@ -1,0 +1,7 @@
+$well-base: 5px;
+
+.well {}
+
+@for $i from 1 to 5 {
+  .well--$(i)x { padding: calc($(i) * $well-base); }
+}
