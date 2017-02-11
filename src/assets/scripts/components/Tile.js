@@ -6,7 +6,7 @@ export default function Tile(props) {
   return (
     <div className="tile">
       <div className="tile__content">
-        {props.number}
+        {props.value}
       </div>
     </div>
   );

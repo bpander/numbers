@@ -21,8 +21,8 @@ export default function NumbersGame(props) {
       <ul className="aligner aligner--gutters">
         {numbers.map(number => (
           <li className="aligner__item">
-            <Slot number={number}>
-              <Tile number={number} />
+            <Slot value={number.value}>
+              <Tile value={number.value} />
             </Slot>
           </li>
         ))}
@@ -34,7 +34,18 @@ export default function NumbersGame(props) {
         {equations.map(equation => (
           <li></li>
         ))}
-        <li></li>
+        <li>
+          <ul className="aligner aligner--gutters">
+            <li className="aligner__item"></li>
+            <li className="aligner__item"><Slot /></li>
+            <li className="aligner__item">
+              ÷
+            </li>
+            <li className="aligner__item"><Slot /></li>
+            <li className="aligner__item">=</li>
+            <li className="aligner__item"></li>
+          </ul>
+        </li>
       </ul>
     </div>
   );

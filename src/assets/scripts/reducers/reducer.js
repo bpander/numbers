@@ -10,7 +10,7 @@ const twoBigRestSmall = () => {
   return flatten([
     times(2, () => pullAt(_largeSet, randomInt(0, _largeSet.length - 1))),
     times(4, () => pullAt(_smallSet, randomInt(0, _smallSet.length - 1))),
-  ]);
+  ]).map(value => ({ value }));
 };
 
 const initialState = {
