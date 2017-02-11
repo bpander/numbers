@@ -1,0 +1,28 @@
+
+.console {
+  position: relative;
+  background-color: #555555;
+  color: #33ff33;
+  text-shadow: 0 0 5px #00ff00;
+  box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 1);
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.console:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: repeating-linear-gradient(
+    top,
+    transparent 0px,
+    transparent 1px,
+    rgba(0,0,0,0.2) 1px,
+    rgba(0,0,0,0.2) 2px
+  );
+
+}

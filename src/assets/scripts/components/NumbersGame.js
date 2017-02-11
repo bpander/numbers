@@ -1,11 +1,18 @@
 import Inferno from 'inferno';
+import Console from 'components/Console';
 
 
 export default function NumbersGame(props) {
   const { target, numbers } = props;
   return (
     <div>
-      Target: <span style="font-size: 24px;">{target}</span>
+      <div className="typ typ--alignCenter">
+        <div className="typ typ--uppercase typ--0.75x typ--inception2x">Target</div>
+        <div className="vr vr--1x"></div>
+        <div style="display: inline-block;">
+          <Console message={target} />
+        </div>
+      </div>
       <table>
         {numbers.map(number => (
           <td style={{

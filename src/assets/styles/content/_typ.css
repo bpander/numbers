@@ -1,0 +1,15 @@
+$typ-base: 16;
+
+.typ {}
+
+.typ--0\.75x { font-size: 12px; }
+.typ--1x { font-size: 16px; }
+.typ--1\.5x { font-size: 24px; }
+.typ--2x { font-size: 32px; }
+
+.typ--inception1x { letter-spacing: 0.01em; }
+.typ--inception2x { letter-spacing: 0.1em; }
+
+.typ--alignCenter { text-align: center; }
+
+.typ--uppercase { text-transform: uppercase; }
