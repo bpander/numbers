@@ -5,7 +5,7 @@ import Tile from 'components/Tile';
 
 
 export default function NumbersGame(props) {
-  const { target, numbers } = props;
+  const { equations, numbers, target } = props;
   return (
     <div>
       <div className="typ typ--alignCenter">
@@ -26,6 +26,15 @@ export default function NumbersGame(props) {
             </Slot>
           </li>
         ))}
+      </ul>
+
+      <div className="vr vr--2x"></div>
+
+      <ul>
+        {equations.map(equation => (
+          <li></li>
+        ))}
+        <li></li>
       </ul>
     </div>
   );
