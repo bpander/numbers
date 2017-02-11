@@ -1,19 +1,15 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 import Console from 'components/Console';
+import Draggable from 'components/Draggable';
 import Slot from 'components/Slot';
 import Tile from 'components/Tile';
 
 
 export default class NumbersGame extends Component {
 
-  onTileMouseDown = (index, e) => {
-    e.preventDefault();
-    this.props.actions.startDrag(index);
-  };
-
   render() {
-    const { dragIndex, equations, numbers, target } = this.props;
+    const { equations, numbers, target } = this.props;
     return (
       <div>
         <div className="typ typ--alignCenter">
@@ -30,9 +26,17 @@ export default class NumbersGame extends Component {
           {numbers.map((number, i) => (
             <li className="aligner__item">
               <Slot value={number.value}>
-                {(i !== dragIndex) && (
-                  <Tile value={number.value} onMouseDown={this.onTileMouseDown.bind(null, i)} />
-                )}
+                <Draggable>{draggable => (
+                  <Tile
+                    value={number.value}
+                    onMouseDown={draggable.onMouseDown}
+                    style={(!draggable.state.isDragging) ? null : {
+                      left:   draggable.state.left,
+                      top:    draggable.state.top,
+                      zIndex: 1,
+                    }}
+                  />
+                )}</Draggable>
               </Slot>
             </li>
           ))}

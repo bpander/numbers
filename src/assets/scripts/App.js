@@ -8,7 +8,6 @@ import NumbersGame from 'components/NumbersGame';
 
 const mapStateToProps = state => {
   return {
-    dragIndex: state.dragIndex,
     equations: state.equations,
     numbers: state.numbers,
     target: state.target,
@@ -22,20 +21,12 @@ const mapDispatchToProps = dispatch => {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
 
-  onMouseUp = () => {
-    this.props.actions.stopDrag();
-  };
-
-  componentDidMount() {
-    window.addEventListener('mouseup', this.onMouseUp);
-  }
-
   render() {
-    const { actions, dragIndex, equations, numbers, target } = this.props;
+    const { actions, equations, numbers, target } = this.props;
     return (
       <div className="wrap">
         <div className="well well--2x">
-          <NumbersGame {...{ actions, dragIndex, equations, numbers, target }} />
+          <NumbersGame {...{ actions, equations, numbers, target }} />
         </div>
       </div>
     );
