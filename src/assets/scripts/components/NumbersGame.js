@@ -76,9 +76,13 @@ export default class NumbersGame extends Component {
                         <Tile
                           value={tile.value}
                           onMouseDown={draggable.onMouseDown}
+                          onTouchStart={draggable.onMouseDown}
                           style={(!draggable.state.isDragging) ? null : {
-                            left:   draggable.state.left,
-                            top:    draggable.state.top,
+                            transform: `translate3d(
+                              ${draggable.state.left}px,
+                              ${draggable.state.top}px,
+                              0
+                            )`,
                             pointerEvents: 'none',
                             zIndex: 1,
                           }}
@@ -119,9 +123,13 @@ export default class NumbersGame extends Component {
                             <Tile
                               value={tileA.value}
                               onMouseDown={draggable.onMouseDown}
+                              onTouchStart={draggable.onMouseDown}
                               style={(!draggable.state.isDragging) ? null : {
-                                left:   draggable.state.left,
-                                top:    draggable.state.top,
+                                transform: `translate3d(
+                                  ${draggable.state.left}px,
+                                  ${draggable.state.top}px,
+                                  0
+                                )`,
                                 pointerEvents: 'none',
                                 zIndex: 1,
                               }}
@@ -151,9 +159,13 @@ export default class NumbersGame extends Component {
                             <Tile
                               value={tileB.value}
                               onMouseDown={draggable.onMouseDown}
+                              onTouchStart={draggable.onMouseDown}
                               style={(!draggable.state.isDragging) ? null : {
-                                left:   draggable.state.left,
-                                top:    draggable.state.top,
+                                transform: `translate3d(
+                                  ${draggable.state.left}px,
+                                  ${draggable.state.top}px,
+                                  0
+                                )`,
                                 pointerEvents: 'none',
                                 zIndex: 1,
                               }}
