@@ -9,7 +9,15 @@
   padding-top: 100%;
   position: relative;
   font-size: 6vw;
-  cursor: pointer;
+  transition: background-color 100ms linear;
+}
+
+.slot--receptive {
+  background: #eeeecc;
+}
+
+.slot--receiving {
+  background: #ffff99;
 }
 
 .slot__content {

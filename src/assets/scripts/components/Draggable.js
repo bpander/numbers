@@ -4,6 +4,11 @@ import Component from 'inferno-component';
 
 export default class Draggable extends Component {
 
+  static defaultProps = {
+    onDragStart: () => {},
+    onDragEnd: () => {},
+  };
+
   state = {
     isDragging: false,
     left: 0,
@@ -23,7 +28,8 @@ export default class Draggable extends Component {
     // Start tracking the mouse movement
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
-    this.setState({ isDragging: true, left: 0, top: 0, });
+    this.props.onDragStart();
+    this.setState({ isDragging: true, left: 0, top: 0 });
   };
 
   onMouseMove = e => {
@@ -35,6 +41,7 @@ export default class Draggable extends Component {
 
   onMouseUp = () => {
     window.removeEventListener('mousemove', this.onMouseMove);
+    this.props.onDragEnd();
     this.setState({ isDragging: false });
   };
 

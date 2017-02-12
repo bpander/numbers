@@ -2,13 +2,14 @@ import Inferno from 'inferno';
 
 
 export default function Slot(props) {
+  const { className = '', value, children, ...rest } = props;
   return (
-    <div className="slot">
+    <div className={`slot ${className}`} {...rest}>
       <div className="slot__content">
-        {props.value}
+        {value}
       </div>
       <div className="slot__other">
-        {props.children}
+        {children}
       </div>
     </div>
   );

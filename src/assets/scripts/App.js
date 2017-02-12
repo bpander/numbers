@@ -9,7 +9,7 @@ import NumbersGame from 'components/NumbersGame';
 const mapStateToProps = state => {
   return {
     equations: state.equations,
-    numbers: state.numbers,
+    tiles: state.tiles,
     target: state.target,
   };
 };
@@ -22,11 +22,11 @@ const mapDispatchToProps = dispatch => {
 export default class App extends Component {
 
   render() {
-    const { actions, equations, numbers, target } = this.props;
+    const { actions, equations, tiles, target } = this.props;
     return (
       <div className="wrap">
         <div className="well well--2x">
-          <NumbersGame {...{ actions, equations, numbers, target }} />
+          <NumbersGame {...{ actions, equations, tiles, target }} />
         </div>
       </div>
     );
