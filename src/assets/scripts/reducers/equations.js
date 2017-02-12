@@ -9,7 +9,7 @@ export default function equations(state = initialState, action) {
   const { payload } = action;
 
   switch (action.type) {
-    case ActionTypes.PLACE_TILE:
+    case ActionTypes.PLACE_TILE: {
       const equationIndex = Math.floor(payload.index / 2);
       const termIndex = payload.index - (equationIndex * 2);
 
@@ -23,6 +23,7 @@ export default function equations(state = initialState, action) {
         }
         return equation;
       });
+    }
   }
   return state;
 };

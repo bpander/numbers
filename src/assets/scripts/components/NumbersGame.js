@@ -10,20 +10,9 @@ import Tile from 'components/Tile';
 export default class NumbersGame extends Component {
 
   state = {
+    isDragging: false,
     dragTarget: null,
     dropTarget: null,
-  };
-
-  onDragStart = dragTarget => {
-    this.setState({ dragTarget });
-  };
-
-  onDragEnter = dropTarget => {
-    this.setState({ dropTarget });
-  };
-
-  onDragLeave = () => {
-    this.setState({ dropTarget: null });
   };
 
   onDragEnd = () => {
@@ -32,6 +21,16 @@ export default class NumbersGame extends Component {
     if (dropTarget != null) {
       this.props.actions.placeTile(dragTarget, dropTarget);
     }
+  };
+
+  draggableConfig = {
+    onDragStart: draggable => this.setState({ isDragging: true, dragTarget: draggable }),
+    onDragEnd: () => this.setState({ isDragging: false, dragTarget: null }),
+  };
+
+  droppableConfig = {
+    onDropEnter: droppable => this.setState({ dropTarget: droppable }),
+    onDropLeave: () => this.setState({ dropTarget: null }),
   };
 
   render() {
@@ -68,24 +67,23 @@ export default class NumbersGame extends Component {
               <li className="aligner__item">
                 <Slot value={tile.value}>
                   {(!isUsed) && (
-                    <Draggable
-                      onDragStart={this.onDragStart.bind(this, tile)}
-                      onDragEnd={this.onDragEnd}
-                    >
+                    <Draggable {...this.draggableConfig}>
                       {draggable => (
                         <Tile
                           value={tile.value}
                           onMouseDown={draggable.onMouseDown}
                           onTouchStart={draggable.onMouseDown}
-                          style={(!draggable.state.isDragging) ? null : {
-                            transform: `translate3d(
-                              ${draggable.state.left}px,
-                              ${draggable.state.top}px,
-                              0
-                            )`,
-                            pointerEvents: 'none',
-                            zIndex: 1,
-                          }}
+                          style={(draggable === this.state.dragTarget)
+                            ? {
+                              transform: `translate3d(
+                                ${draggable.state.left}px,
+                                ${draggable.state.top}px,
+                                0
+                              )`,
+                              zIndex: 1,
+                            }
+                            : null
+                          }
                         />
                       )}
                     </Draggable>
@@ -111,28 +109,28 @@ export default class NumbersGame extends Component {
                       className={(dropTarget === i * 2)
                         ? 'slot--receiving'
                         : slotClassName}
-                      onMouseEnter={onDragEnter.bind(this, i * 2)}
-                      onMouseLeave={onDragLeave.bind(this, i * 2)}
+                      onTouchMove={() => console.log('onTouchMove', i)}
+                      // onMouseEnter={onDragEnter.bind(this, i * 2)}
+                      // onMouseLeave={onDragLeave.bind(this, i * 2)}
                     >
                       {(tileA != null) && (
-                        <Draggable
-                          onDragStart={this.onDragStart.bind(this, tileA)}
-                          onDragEnd={this.onDragEnd}
-                        >
+                        <Draggable {...this.draggableConfig}>
                           {draggable => (
                             <Tile
                               value={tileA.value}
                               onMouseDown={draggable.onMouseDown}
                               onTouchStart={draggable.onMouseDown}
-                              style={(!draggable.state.isDragging) ? null : {
-                                transform: `translate3d(
-                                  ${draggable.state.left}px,
-                                  ${draggable.state.top}px,
-                                  0
-                                )`,
-                                pointerEvents: 'none',
-                                zIndex: 1,
-                              }}
+                              style={(draggable === this.state.dragTarget)
+                                ? {
+                                  transform: `translate3d(
+                                    ${draggable.state.left}px,
+                                    ${draggable.state.top}px,
+                                    0
+                                  )`,
+                                  zIndex: 1,
+                                }
+                                : null
+                              }
                             />
                           )}
                         </Draggable>
@@ -147,28 +145,27 @@ export default class NumbersGame extends Component {
                       className={(dropTarget === i * 2 + 1)
                         ? 'slot--receiving'
                         : slotClassName}
-                      onMouseEnter={onDragEnter.bind(this, i * 2 + 1)}
-                      onMouseLeave={onDragLeave.bind(this, i * 2 + 1)}
+                      // onMouseEnter={onDragEnter.bind(this, i * 2 + 1)}
+                      // onMouseLeave={onDragLeave.bind(this, i * 2 + 1)}
                     >
                       {(tileB != null) && (
-                        <Draggable
-                          onDragStart={this.onDragStart.bind(this, tileB)}
-                          onDragEnd={this.onDragEnd}
-                        >
+                        <Draggable {...this.draggableConfig}>
                           {draggable => (
                             <Tile
                               value={tileB.value}
                               onMouseDown={draggable.onMouseDown}
                               onTouchStart={draggable.onMouseDown}
-                              style={(!draggable.state.isDragging) ? null : {
-                                transform: `translate3d(
-                                  ${draggable.state.left}px,
-                                  ${draggable.state.top}px,
-                                  0
-                                )`,
-                                pointerEvents: 'none',
-                                zIndex: 1,
-                              }}
+                              style={(draggable === this.state.dragTarget)
+                                ? {
+                                  transform: `translate3d(
+                                    ${draggable.state.left}px,
+                                    ${draggable.state.top}px,
+                                    0
+                                  )`,
+                                  zIndex: 1,
+                                }
+                                : null
+                              }
                             />
                           )}
                         </Draggable>

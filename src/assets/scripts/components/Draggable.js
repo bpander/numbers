@@ -10,7 +10,6 @@ export default class Draggable extends Component {
   };
 
   state = {
-    isDragging: false,
     left: 0,
     top: 0,
   };
@@ -35,8 +34,8 @@ export default class Draggable extends Component {
     window.addEventListener('touchmove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('touchend', this.onMouseUp);
-    this.props.onDragStart();
-    this.setState({ isDragging: true, left: 0, top: 0 });
+    this.props.onDragStart(this);
+    this.setState({ left: 0, top: 0 });
   };
 
   onMouseMove = e => {
@@ -56,8 +55,7 @@ export default class Draggable extends Component {
     window.removeEventListener('touchmove', this.onMouseMove);
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('touchend', this.onMouseUp);
-    this.props.onDragEnd();
-    this.setState({ isDragging: false });
+    this.props.onDragEnd(this);
   };
 
   render() {
