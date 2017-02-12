@@ -62,64 +62,113 @@ export default class NumbersGame extends Component {
         <div className="vr vr--2x"></div>
 
         <ul className="aligner aligner--gutters">
-          {tiles.map((tile, i) => (
-            <li className="aligner__item">
-              <Slot value={tile.value}>
-                <Draggable
-                  onDragStart={this.onDragStart.bind(this, tile)}
-                  onDragEnd={this.onDragEnd}
-                >
-                  {draggable => (
-                    <Tile
-                      value={tile.value}
-                      onMouseDown={draggable.onMouseDown}
-                      style={(!draggable.state.isDragging) ? null : {
-                        left:   draggable.state.left,
-                        top:    draggable.state.top,
-                        pointerEvents: 'none',
-                        zIndex: 1,
-                      }}
-                    />
+          {tiles.map((tile, i) => {
+            const isUsed = equations.some(equation => equation.includes(tile));
+            return (
+              <li className="aligner__item">
+                <Slot value={tile.value}>
+                  {(!isUsed) && (
+                    <Draggable
+                      onDragStart={this.onDragStart.bind(this, tile)}
+                      onDragEnd={this.onDragEnd}
+                    >
+                      {draggable => (
+                        <Tile
+                          value={tile.value}
+                          onMouseDown={draggable.onMouseDown}
+                          style={(!draggable.state.isDragging) ? null : {
+                            left:   draggable.state.left,
+                            top:    draggable.state.top,
+                            pointerEvents: 'none',
+                            zIndex: 1,
+                          }}
+                        />
+                      )}
+                    </Draggable>
                   )}
-                </Draggable>
-              </Slot>
-            </li>
-          ))}
+                </Slot>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="vr vr--2x"></div>
 
         <ul>
-          {equations.map((equation, i) => (
-            <li>
-              <ul className="aligner aligner--gutters">
-                <li className="aligner__item"></li>
-                <li className="aligner__item">
-                  <Slot
-                    className={(dropTarget === i * 2)
-                      ? 'slot--receiving'
-                      : slotClassName}
-                    onMouseEnter={onDragEnter.bind(this, i * 2)}
-                    onMouseLeave={onDragLeave.bind(this, i * 2)}
-                  />
-                </li>
-                <li className="aligner__item">
-                  ÷
-                </li>
-                <li className="aligner__item">
-                  <Slot
-                    className={(dropTarget === i * 2 + 1)
-                      ? 'slot--receiving'
-                      : slotClassName}
-                    onMouseEnter={onDragEnter.bind(this, i * 2 + 1)}
-                    onMouseLeave={onDragLeave.bind(this, i * 2 + 1)}
-                  />
-                </li>
-                <li className="aligner__item">=</li>
-                <li className="aligner__item"></li>
-              </ul>
-            </li>
-          ))}
+          {equations.map((equation, i) => {
+            const tileA = equation[0];
+            const tileB = equation[1];
+            return (
+              <li>
+                <ul className="aligner aligner--gutters">
+                  <li className="aligner__item"></li>
+                  <li className="aligner__item">
+                    <Slot
+                      className={(dropTarget === i * 2)
+                        ? 'slot--receiving'
+                        : slotClassName}
+                      onMouseEnter={onDragEnter.bind(this, i * 2)}
+                      onMouseLeave={onDragLeave.bind(this, i * 2)}
+                    >
+                      {(tileA != null) && (
+                        <Draggable
+                          onDragStart={this.onDragStart.bind(this, tileA)}
+                          onDragEnd={this.onDragEnd}
+                        >
+                          {draggable => (
+                            <Tile
+                              value={tileA.value}
+                              onMouseDown={draggable.onMouseDown}
+                              style={(!draggable.state.isDragging) ? null : {
+                                left:   draggable.state.left,
+                                top:    draggable.state.top,
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                              }}
+                            />
+                          )}
+                        </Draggable>
+                      )}
+                    </Slot>
+                  </li>
+                  <li className="aligner__item">
+                    ÷
+                  </li>
+                  <li className="aligner__item">
+                    <Slot
+                      className={(dropTarget === i * 2 + 1)
+                        ? 'slot--receiving'
+                        : slotClassName}
+                      onMouseEnter={onDragEnter.bind(this, i * 2 + 1)}
+                      onMouseLeave={onDragLeave.bind(this, i * 2 + 1)}
+                    >
+                      {(tileB != null) && (
+                        <Draggable
+                          onDragStart={this.onDragStart.bind(this, tileB)}
+                          onDragEnd={this.onDragEnd}
+                        >
+                          {draggable => (
+                            <Tile
+                              value={tileB.value}
+                              onMouseDown={draggable.onMouseDown}
+                              style={(!draggable.state.isDragging) ? null : {
+                                left:   draggable.state.left,
+                                top:    draggable.state.top,
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                              }}
+                            />
+                          )}
+                        </Draggable>
+                      )}
+                    </Slot>
+                  </li>
+                  <li className="aligner__item">=</li>
+                  <li className="aligner__item"></li>
+                </ul>
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
