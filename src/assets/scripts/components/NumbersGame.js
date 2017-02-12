@@ -99,37 +99,45 @@ export default class NumbersGame extends Component {
                 <ul className="aligner aligner--gutters">
                   <li className="aligner__item"></li>
                   <li className="aligner__item">
-                    <Slot
-                      className={(dropTarget === i * 2)
-                        ? 'slot--receiving'
-                        : slotClassName}
+                    <Droppable
+                      isDragging={this.state.isDragging}
+                      onDropEnter={this.onDropEnter.bind(this, i * 2)}
+                      onDropLeave={this.onDropLeave}
                     >
-                      {(tileA != null) && (
-                        <Draggable
-                          onDragStart={this.onDragStart.bind(this, tileA)}
-                          onDragEnd={this.onDragEnd}
+                      {droppable => (
+                        <Slot
+                          className={(dropTarget === i * 2)
+                            ? 'slot--receiving'
+                            : slotClassName}
                         >
-                          {draggable => (
-                            <Tile
-                              value={tileA.value}
-                              onMouseDown={draggable.onMouseDown}
-                              onTouchStart={draggable.onMouseDown}
-                              style={(tileA === dragTarget)
-                                ? {
-                                  transform: `translate3d(
-                                    ${draggable.state.left}px,
-                                    ${draggable.state.top}px,
-                                    0
-                                  )`,
-                                  zIndex: 1,
-                                }
-                                : null
-                              }
-                            />
+                          {(tileA != null) && (
+                            <Draggable
+                              onDragStart={this.onDragStart.bind(this, tileA)}
+                              onDragEnd={this.onDragEnd}
+                            >
+                              {draggable => (
+                                <Tile
+                                  value={tileA.value}
+                                  onMouseDown={draggable.onMouseDown}
+                                  onTouchStart={draggable.onMouseDown}
+                                  style={(tileA === dragTarget)
+                                    ? {
+                                      transform: `translate3d(
+                                        ${draggable.state.left}px,
+                                        ${draggable.state.top}px,
+                                        0
+                                      )`,
+                                      zIndex: 1,
+                                    }
+                                    : null
+                                  }
+                                />
+                              )}
+                            </Draggable>
                           )}
-                        </Draggable>
+                        </Slot>
                       )}
-                    </Slot>
+                    </Droppable>
                   </li>
                   <li className="aligner__item">
                     ÷
