@@ -9,6 +9,8 @@ import reducer from 'reducers/reducer';
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 const node = document.getElementById('js-app');
 
+Inferno.options.findDOMNodeEnabled = true;
+
 Inferno.render(
   <Provider store={store}>
     <App />

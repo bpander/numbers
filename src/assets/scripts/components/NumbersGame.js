@@ -3,6 +3,7 @@ import Component from 'inferno-component';
 import { noop } from 'lodash';
 import Console from 'components/Console';
 import Draggable from 'components/Draggable';
+import Droppable from 'components/Droppable';
 import Slot from 'components/Slot';
 import Tile from 'components/Tile';
 
@@ -15,35 +16,25 @@ export default class NumbersGame extends Component {
     dropTarget: null,
   };
 
+  onDragStart = target => this.setState({ isDragging: true, dragTarget: target });
+
   onDragEnd = () => {
     const { dragTarget, dropTarget } = this.state;
-    this.setState({ dropTarget: null, dragTarget: null });
+    this.setState({ isDragging: false, dragTarget: null, dropTarget: null });
     if (dropTarget != null) {
       this.props.actions.placeTile(dragTarget, dropTarget);
     }
   };
 
-  draggableConfig = {
-    onDragStart: draggable => this.setState({ isDragging: true, dragTarget: draggable }),
-    onDragEnd: () => this.setState({ isDragging: false, dragTarget: null }),
-  };
+  onDropEnter = target => this.setState({ dropTarget: target });
 
-  droppableConfig = {
-    onDropEnter: droppable => this.setState({ dropTarget: droppable }),
-    onDropLeave: () => this.setState({ dropTarget: null }),
-  };
+  onDropLeave = () => this.setState({ dropTarget: null });
 
   render() {
     const { equations, tiles, target } = this.props;
-    const { dragTarget, dropTarget } = this.state;
-    let onDragEnter = noop;
-    let onDragLeave = noop;
-    let slotClassName;
-    if (dragTarget != null) {
-      onDragEnter = this.onDragEnter;
-      onDragLeave = this.onDragLeave;
-      slotClassName = 'slot--receptive';
-    }
+    const { dragTarget, dropTarget, isDragging } = this.state;
+    const slotClassName = (isDragging) ? 'slot--receptive' : '';
+
     return (
       <div>
         <div className="typ typ--alignCenter">
@@ -67,13 +58,16 @@ export default class NumbersGame extends Component {
               <li className="aligner__item">
                 <Slot value={tile.value}>
                   {(!isUsed) && (
-                    <Draggable {...this.draggableConfig}>
+                    <Draggable
+                      onDragStart={this.onDragStart.bind(this, tile)}
+                      onDragEnd={this.onDragEnd}
+                    >
                       {draggable => (
                         <Tile
                           value={tile.value}
                           onMouseDown={draggable.onMouseDown}
                           onTouchStart={draggable.onMouseDown}
-                          style={(draggable === this.state.dragTarget)
+                          style={(tile === dragTarget)
                             ? {
                               transform: `translate3d(
                                 ${draggable.state.left}px,
@@ -109,18 +103,18 @@ export default class NumbersGame extends Component {
                       className={(dropTarget === i * 2)
                         ? 'slot--receiving'
                         : slotClassName}
-                      onTouchMove={() => console.log('onTouchMove', i)}
-                      // onMouseEnter={onDragEnter.bind(this, i * 2)}
-                      // onMouseLeave={onDragLeave.bind(this, i * 2)}
                     >
                       {(tileA != null) && (
-                        <Draggable {...this.draggableConfig}>
+                        <Draggable
+                          onDragStart={this.onDragStart.bind(this, tileA)}
+                          onDragEnd={this.onDragEnd}
+                        >
                           {draggable => (
                             <Tile
                               value={tileA.value}
                               onMouseDown={draggable.onMouseDown}
                               onTouchStart={draggable.onMouseDown}
-                              style={(draggable === this.state.dragTarget)
+                              style={(tileA === dragTarget)
                                 ? {
                                   transform: `translate3d(
                                     ${draggable.state.left}px,
@@ -141,36 +135,45 @@ export default class NumbersGame extends Component {
                     ÷
                   </li>
                   <li className="aligner__item">
-                    <Slot
-                      className={(dropTarget === i * 2 + 1)
-                        ? 'slot--receiving'
-                        : slotClassName}
-                      // onMouseEnter={onDragEnter.bind(this, i * 2 + 1)}
-                      // onMouseLeave={onDragLeave.bind(this, i * 2 + 1)}
+                    <Droppable
+                      isDragging={this.state.isDragging}
+                      onDropEnter={this.onDropEnter.bind(this, i * 2 + 1)}
+                      onDropLeave={this.onDropLeave}
                     >
-                      {(tileB != null) && (
-                        <Draggable {...this.draggableConfig}>
-                          {draggable => (
-                            <Tile
-                              value={tileB.value}
-                              onMouseDown={draggable.onMouseDown}
-                              onTouchStart={draggable.onMouseDown}
-                              style={(draggable === this.state.dragTarget)
-                                ? {
-                                  transform: `translate3d(
-                                    ${draggable.state.left}px,
-                                    ${draggable.state.top}px,
-                                    0
-                                  )`,
-                                  zIndex: 1,
-                                }
-                                : null
-                              }
-                            />
+                      {droppable => (
+                        <Slot
+                          className={(dropTarget === i * 2 + 1)
+                            ? 'slot--receiving'
+                            : slotClassName}
+                        >
+                          {(tileB != null) && (
+                            <Draggable
+                              onDragStart={this.onDragStart.bind(this, tileB)}
+                              onDragEnd={this.onDragEnd}
+                            >
+                              {draggable => (
+                                <Tile
+                                  value={tileB.value}
+                                  onMouseDown={draggable.onMouseDown}
+                                  onTouchStart={draggable.onMouseDown}
+                                  style={(tileB === dragTarget)
+                                    ? {
+                                      transform: `translate3d(
+                                        ${draggable.state.left}px,
+                                        ${draggable.state.top}px,
+                                        0
+                                      )`,
+                                      zIndex: 1,
+                                    }
+                                    : null
+                                  }
+                                />
+                              )}
+                            </Draggable>
                           )}
-                        </Draggable>
+                        </Slot>
                       )}
-                    </Slot>
+                    </Droppable>
                   </li>
                   <li className="aligner__item">=</li>
                   <li className="aligner__item"></li>
