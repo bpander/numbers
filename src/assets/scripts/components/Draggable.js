@@ -21,13 +21,9 @@ export default class Draggable extends Component {
     e.preventDefault();
 
     // Store the initial offset
-    if (e.type === 'touchstart') {
-      this.offset[0] = e.touches[0].clientX;
-      this.offset[1] = e.touches[0].clientY;
-    } else {
-      this.offset[0] = e.clientX;
-      this.offset[1] = e.clientY;
-    }
+    const { clientX, clientY } = (e.type === 'touchstart') ? e.touches[0] : e;
+    this.offset[0] = clientX;
+    this.offset[1] = clientY;
 
     // Start tracking the mouse movement
     window.addEventListener('mousemove', this.onMouseMove);
@@ -39,11 +35,7 @@ export default class Draggable extends Component {
   };
 
   onMouseMove = e => {
-    let { clientX, clientY } = e;
-    if (e.type === 'touchmove') {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    }
+    const { clientX, clientY } = (e.type === 'touchmove') ? e.touches[0] : e;
     this.setState({
       left: clientX - this.offset[0],
       top:  clientY - this.offset[1],

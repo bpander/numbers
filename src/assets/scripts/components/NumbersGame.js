@@ -1,6 +1,5 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
-import { noop } from 'lodash';
 import Console from 'components/Console';
 import Draggable from 'components/Draggable';
 import Droppable from 'components/Droppable';
@@ -35,7 +34,6 @@ export default class NumbersGame extends Component {
   render() {
     const { equations, tiles, target } = this.props;
     const { dragTarget, dropTarget, isDragging, operandIndex } = this.state;
-    const slotClassName = (isDragging) ? 'slot--receptive' : '';
 
     return (
       <div>
