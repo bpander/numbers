@@ -11,3 +11,7 @@
 .aligner--justified {
   justify-content: space-between;
 }
+
+.aligner--gutters > * + * {
+  margin-left: 2px;
+}

@@ -1,16 +1,24 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
+
 import Console from 'components/Console';
-import Step from 'components/Step';
 import Numble from 'components/Numble';
+import Operator from 'components/Operator';
+import Step from 'components/Step';
+
+import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH } from 'constants/StreamConstants';
 import { times } from 'util/arrays';
 
 
 export default class NumbersGame extends Component {
 
-  onNumbleClick = n => () => {
-    this.props.actions.insertAtCursor(n);
+  onNumbleClick = index => () => {
+    this.props.actions.insertAtCursor(index);
+  };
+
+  onOperatorClick = operator => () => {
+    this.props.actions.insertAtCursor(operator);
   };
 
   render() {
@@ -36,17 +44,27 @@ export default class NumbersGame extends Component {
           {numbers.map((number, i) => {
             return (
               <li>
-                <Numble value={number} onClick={this.onNumbleClick(number)} />
+                <Numble value={number} onClick={this.onNumbleClick(i)} />
               </li>
             );
           })}
+        </ul>
+        <ul className="aligner aligner--alignCenter aligner--gutters">
+          {Object.values(OperatorTypes).map(operator => (
+            <li>
+              <Operator type={operator} onClick={this.onOperatorClick(operator)} />
+            </li>
+          ))}
         </ul>
 
         <div className="vr vr--2x"></div>
 
         <ul>
-          {times(Math.max(1, Math.floor(stream.length / BIT_DEPTH)), i => {
-            const equation = stream.slice(i, i + BIT_DEPTH);
+          {times(Math.ceil((stream.length + 1) / BIT_DEPTH), i => {
+            const start = i * BIT_DEPTH;
+            const equation = stream.slice(start, start + BIT_DEPTH);
+            equation[0] = numbers[equation[0]];
+            equation[2] = numbers[equation[2]];
             return (
               <li>
                 <Step equation={equation} />

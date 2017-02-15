@@ -13,7 +13,7 @@ Inferno.options.findDOMNodeEnabled = true;
 
 node.innerHTML = '';
 
-Inferno.render(
+window.provider = Inferno.render(
   <Provider store={store}>
     <App />
   </Provider>,
