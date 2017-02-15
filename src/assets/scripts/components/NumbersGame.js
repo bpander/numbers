@@ -1,13 +1,20 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 import Console from 'components/Console';
+import Step from 'components/Step';
 import Numble from 'components/Numble';
+import { BIT_DEPTH } from 'constants/StreamConstants';
+import { times } from 'util/arrays';
 
 
 export default class NumbersGame extends Component {
 
+  onNumbleClick = n => () => {
+    this.props.actions.insertAtCursor(n);
+  };
+
   render() {
-    const { cursor, numbers, stream, target } = this.props;
+    const { actions, cursor, numbers, stream, target } = this.props;
 
     return (
       <div>
@@ -29,7 +36,7 @@ export default class NumbersGame extends Component {
           {numbers.map((number, i) => {
             return (
               <li>
-                <Numble value={number} />
+                <Numble value={number} onClick={this.onNumbleClick(number)} />
               </li>
             );
           })}
@@ -38,7 +45,14 @@ export default class NumbersGame extends Component {
         <div className="vr vr--2x"></div>
 
         <ul>
-          {/* equations */}
+          {times(Math.max(1, Math.floor(stream.length / BIT_DEPTH)), i => {
+            const equation = stream.slice(i, i + BIT_DEPTH);
+            return (
+              <li>
+                <Step equation={equation} />
+              </li>
+            );
+          })}
         </ul>
       </div>
     );

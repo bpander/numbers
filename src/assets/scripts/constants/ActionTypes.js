@@ -1,0 +1,2 @@
+
+export const INSERT_AT_CURSOR = 'INSERT_AT_CURSOR';

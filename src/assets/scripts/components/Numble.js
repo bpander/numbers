@@ -2,7 +2,7 @@ import Inferno from 'inferno';
 
 
 const Numble = props => (
-  <div className="bubble">
+  <div className="bubble" onClick={props.onClick}>
     {props.value}
   </div>
 );

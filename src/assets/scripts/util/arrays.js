@@ -7,6 +7,12 @@ export const flatten = (array = []) => {
   }, []);
 };
 
+export const insertAt = (array = [], index, ...values) => {
+  const copy = [ ...array ];
+  copy.splice(index, 0, ...values);
+  return copy;
+};
+
 export const pullAt = (array = [], index = 0) => {
   return array.splice(index, 1)[0];
 };
