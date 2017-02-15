@@ -1,6 +1,7 @@
 import Inferno from 'inferno';
 import Component from 'inferno-component';
 import Console from 'components/Console';
+import Numble from 'components/Numble';
 
 
 export default class NumbersGame extends Component {
@@ -24,10 +25,12 @@ export default class NumbersGame extends Component {
         </div>
         <div className="vr vr--2x"></div>
 
-        <ul className="aligner aligner--gutters">
+        <ul className="aligner aligner--justified">
           {numbers.map((number, i) => {
             return (
-              <li className="aligner__item">{number}</li>
+              <li>
+                <Numble value={number} />
+              </li>
             );
           })}
         </ul>

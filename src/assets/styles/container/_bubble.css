@@ -1,0 +1,26 @@
+
+.bubble {
+  width: calc(((100vw - 20px - (5 * 2px)) / 6));
+  height: calc(((100vw - 20px - (5 * 2px)) / 6));
+  font-size: 6vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  font-weight: bold;
+  background: $blue;
+  color: $white;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 500px) {
+
+  .bubble {
+    width: 78px;
+    height: 78px;
+    font-size: 30px;
+  }
+
+}
