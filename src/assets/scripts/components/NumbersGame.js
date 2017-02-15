@@ -7,7 +7,7 @@ import Operator from 'components/Operator';
 import Step from 'components/Step';
 
 import * as OperatorTypes from 'constants/OperatorTypes';
-import { BIT_DEPTH } from 'constants/StreamConstants';
+import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
 import { times } from 'util/arrays';
 
 
@@ -23,6 +23,19 @@ export default class NumbersGame extends Component {
 
   render() {
     const { actions, cursor, numbers, stream, target } = this.props;
+    const inventory = [ ...numbers ];
+    times(Math.floor(stream.length / BIT_DEPTH), i => {
+      const start = i * BIT_DEPTH;
+      const augend = inventory[stream[start + AUGEND_INDEX]];
+      const operator = stream[start + OPERATOR_INDEX];
+      const addend = inventory[stream[start + ADDEND_INDEX]];
+      switch (operator) {
+        case OperatorTypes.ADD: inventory.push(augend + addend); break;
+        case OperatorTypes.SUB: inventory.push(augend - addend); break;
+        case OperatorTypes.MUL: inventory.push(augend * addend); break;
+        case OperatorTypes.DIV: inventory.push(augend / addend); break;
+      }
+    });
 
     return (
       <div>
@@ -40,11 +53,18 @@ export default class NumbersGame extends Component {
         </div>
         <div className="vr vr--2x"></div>
 
-        <ul className="aligner aligner--justified">
-          {numbers.map((number, i) => {
+        <ul className="aligner">
+          {inventory.map((number, i) => {
+            if (stream.includes(i)) {
+              return;
+            }
             return (
               <li>
-                <Numble value={number} onClick={this.onNumbleClick(i)} />
+                <Numble
+                  value={number}
+                  isDerived={i >= numbers.length}
+                  onClick={this.onNumbleClick(i)}
+                />
               </li>
             );
           })}
@@ -63,11 +83,11 @@ export default class NumbersGame extends Component {
           {times(Math.ceil((stream.length + 1) / BIT_DEPTH), i => {
             const start = i * BIT_DEPTH;
             const equation = stream.slice(start, start + BIT_DEPTH);
-            equation[0] = numbers[equation[0]];
-            equation[2] = numbers[equation[2]];
+            equation[AUGEND_INDEX] = inventory[equation[AUGEND_INDEX]];
+            equation[ADDEND_INDEX] = inventory[equation[ADDEND_INDEX]];
             return (
               <li>
-                <Step equation={equation} />
+                <Step equation={equation} sum={inventory[numbers.length + i]} />
               </li>
             );
           })}
