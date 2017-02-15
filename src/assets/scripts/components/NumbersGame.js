@@ -36,6 +36,9 @@ export default class NumbersGame extends Component {
         case OperatorTypes.DIV: inventory.push(augend / addend); break;
       }
     });
+    const equationIndex = Math.floor(cursor / BIT_DEPTH);
+    const oIndex = cursor - (equationIndex * BIT_DEPTH);
+    const isOperatorIndex = oIndex === OPERATOR_INDEX;
 
     return (
       <div>
@@ -62,6 +65,7 @@ export default class NumbersGame extends Component {
               <li>
                 <Numble
                   value={number}
+                  disabled={isOperatorIndex}
                   isDerived={i >= numbers.length}
                   onClick={this.onNumbleClick(i)}
                 />
@@ -72,7 +76,11 @@ export default class NumbersGame extends Component {
         <ul className="aligner aligner--alignCenter aligner--gutters">
           {Object.values(OperatorTypes).map(operator => (
             <li>
-              <Operator type={operator} onClick={this.onOperatorClick(operator)} />
+              <Operator
+                type={operator}
+                disabled={!isOperatorIndex}
+                onClick={this.onOperatorClick(operator)}
+              />
             </li>
           ))}
         </ul>

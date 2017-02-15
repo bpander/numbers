@@ -2,12 +2,13 @@ import Inferno from 'inferno';
 
 
 const Numble = props => (
-  <div
+  <button
     className={`bubble ${(props.isDerived) ? 'bubble--secondary' : ''}`}
+    disabled={props.disabled}
     onClick={props.onClick}
   >
     {props.value}
-  </div>
+  </button>
 );
 
 export default Numble;
