@@ -11,6 +11,8 @@ const node = document.getElementById('js-app');
 
 Inferno.options.findDOMNodeEnabled = true;
 
+node.innerHTML = '';
+
 Inferno.render(
   <Provider store={store}>
     <App />

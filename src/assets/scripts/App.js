@@ -8,8 +8,9 @@ import NumbersGame from 'components/NumbersGame';
 
 const mapStateToProps = state => {
   return {
-    equations: state.equations,
-    tiles: state.tiles,
+    cursor: state.cursor,
+    numbers: state.numbers,
+    stream: state.stream,
     target: state.target,
   };
 };
@@ -22,11 +23,11 @@ const mapDispatchToProps = dispatch => {
 export default class App extends Component {
 
   render() {
-    const { actions, equations, tiles, target } = this.props;
+    const { actions, cursor, numbers, stream, target } = this.props;
     return (
       <div className="wrap">
         <div className="well well--2x">
-          <NumbersGame {...{ actions, equations, tiles, target }} />
+          <NumbersGame {...{ actions, cursor, numbers, stream, target }} />
         </div>
       </div>
     );

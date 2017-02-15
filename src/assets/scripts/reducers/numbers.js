@@ -11,14 +11,12 @@ const twoBigRestSmall = () => {
   const tiles = flatten([
     times(2, () => pullAt(_largeSet, randomInt(0, _largeSet.length - 1))[0]),
     times(4, () => pullAt(_smallSet, randomInt(0, _smallSet.length - 1))[0]),
-  ]).map(value => ({ value }));
+  ]);
 
   return tiles;
 };
 
-const initialState = twoBigRestSmall();
-
-export default function tiles(state = initialState, action) {
+export default function numbers(state = twoBigRestSmall(), action) {
   switch (action.type) {
   }
   return state;

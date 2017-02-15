@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
-import equations from 'reducers/equations';
+import cursor from 'reducers/cursor';
+import numbers from 'reducers/numbers';
+import stream from 'reducers/stream';
 import target from 'reducers/target';
-import tiles from 'reducers/tiles';
 
 
 export default combineReducers({
-  equations,
+  cursor,
+  numbers,
+  stream,
   target,
-  tiles,
 });
