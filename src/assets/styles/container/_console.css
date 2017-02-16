@@ -24,6 +24,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  border-radius: 50%;
   background-image: repeating-linear-gradient(
     top,
     transparent 0px,

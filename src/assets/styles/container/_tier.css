@@ -1,0 +1,8 @@
+
+.tier {
+  background: $tertiary;
+}
+
+.tier--error {
+  background: $error;
+}

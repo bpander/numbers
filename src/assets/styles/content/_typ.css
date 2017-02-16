@@ -13,3 +13,5 @@ $typ-base: 16;
 .typ--alignCenter { text-align: center; }
 
 .typ--uppercase { text-transform: uppercase; }
+
+.typ--lightest { color: $white; }

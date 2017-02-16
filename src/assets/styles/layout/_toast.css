@@ -1,0 +1,14 @@
+
+.toast {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  transition: transform 100ms ease-out;
+  z-index: 2;
+}
+
+.toast--popped {
+  transform: translateY(0);
+}
