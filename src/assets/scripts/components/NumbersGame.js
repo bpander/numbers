@@ -54,9 +54,9 @@ export default class NumbersGame extends Component {
 
         <div className="vr vr--4x"></div>
         <div className="typ typ--alignCenter typ--uppercase typ--0.75x typ--inception2x">
-          With these
+          With this
         </div>
-        <div className="vr vr--2x"></div>
+        <div className="vr vr--1x"></div>
 
         <ul className="aligner">
           {inventory.map((number, i) => {

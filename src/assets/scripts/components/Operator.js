@@ -1,5 +1,15 @@
 import Inferno from 'inferno';
+import { ADD, SUB, MUL, DIV } from 'constants/OperatorTypes';
 
+
+const getGlyph = type => {
+  switch (type) {
+    case ADD: return '+';
+    case SUB: return '−';
+    case MUL: return '×';
+    case DIV: return '÷';
+  }
+};
 
 const Operator = props => {
   const { disabled, onClick, type } = props;
@@ -9,7 +19,7 @@ const Operator = props => {
       disabled={disabled}
       onClick={onClick}
     >
-      {type}
+      {getGlyph(type)}
     </button>
   );
 };
