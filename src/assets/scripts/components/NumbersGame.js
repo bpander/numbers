@@ -22,20 +22,7 @@ export default class NumbersGame extends Component {
   };
 
   render() {
-    const { actions, cursor, numbers, stream, target } = this.props;
-    const inventory = [ ...numbers ];
-    times(Math.floor(stream.length / BIT_DEPTH), i => {
-      const start = i * BIT_DEPTH;
-      const augend = inventory[stream[start + AUGEND_INDEX]];
-      const operator = stream[start + OPERATOR_INDEX];
-      const addend = inventory[stream[start + ADDEND_INDEX]];
-      switch (operator) {
-        case OperatorTypes.ADD: inventory.push(augend + addend); break;
-        case OperatorTypes.SUB: inventory.push(augend - addend); break;
-        case OperatorTypes.MUL: inventory.push(augend * addend); break;
-        case OperatorTypes.DIV: inventory.push(augend / addend); break;
-      }
-    });
+    const { actions, cursor, inventory, numbers, stream, target } = this.props;
     const equationIndex = Math.floor(cursor / BIT_DEPTH);
     const oIndex = cursor - (equationIndex * BIT_DEPTH);
     const isOperatorIndex = oIndex === OPERATOR_INDEX;
