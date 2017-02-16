@@ -12,6 +12,7 @@ const mapStateToProps = state => {
     cursor: state.cursor,
     inventory: getInventory(state),
     numbers: state.numbers,
+    showRulesPrompt: state.showRulesPrompt,
     stream: state.stream,
     target: state.target,
   };
@@ -25,9 +26,20 @@ const mapDispatchToProps = dispatch => {
 export default class App extends Component {
 
   render() {
-    const { actions, cursor, inventory, numbers, stream, target } = this.props;
+    const { actions, cursor, inventory, numbers, showRulesPrompt, stream, target } = this.props;
     return (
       <div className="wrap">
+
+        <div className={`toast ${(showRulesPrompt) ? 'toast--popped' : ''}`}>
+          <div className="tier tier--error">
+            <div className="well well--2x">
+              <div className="typ typ--alignCenter typ--lightest">
+                Only whole numbers are allowed.
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="well well--2x">
           <NumbersGame {...{ actions, cursor, inventory, numbers, stream, target }} />
         </div>

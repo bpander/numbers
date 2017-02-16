@@ -1,2 +1,3 @@
 
 export const INSERT_AT_CURSOR = 'INSERT_AT_CURSOR';
+export const SHOW_RULES_PROMPT = 'SHOW_RULES_PROMPT';

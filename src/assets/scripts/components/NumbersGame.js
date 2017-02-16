@@ -9,11 +9,27 @@ import Step from 'components/Step';
 import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
 import { times } from 'util/arrays';
+import { isWholeNumber, solver } from 'util/numbers';
+import { getLocalIndex } from 'util/streams';
 
 
 export default class NumbersGame extends Component {
 
   onNumbleClick = index => () => {
+    const { cursor, inventory, stream } = this.props;
+    const oIndex = getLocalIndex(cursor, BIT_DEPTH);
+    if (oIndex === ADDEND_INDEX) {
+      const operator = stream[cursor - (ADDEND_INDEX - OPERATOR_INDEX)];
+      if (operator === OperatorTypes.DIV) {
+        const augend = inventory[stream[cursor - (ADDEND_INDEX - AUGEND_INDEX)]];
+        const addend = inventory[index];
+        const solution = solver(operator, augend, addend);
+        if (!isWholeNumber(solution)) {
+          this.props.actions.showRulesPrompt();
+          return;
+        }
+      }
+    }
     this.props.actions.insertAtCursor(index);
   };
 
@@ -23,8 +39,7 @@ export default class NumbersGame extends Component {
 
   render() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
-    const equationIndex = Math.floor(cursor / BIT_DEPTH);
-    const oIndex = cursor - (equationIndex * BIT_DEPTH);
+    const oIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = oIndex === OPERATOR_INDEX;
 
     return (

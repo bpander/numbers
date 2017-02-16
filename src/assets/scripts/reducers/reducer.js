@@ -19,6 +19,7 @@ const twoBigRestSmall = () => {
 const initialState = {
   cursor: 0,
   numbers: twoBigRestSmall(),
+  showRulesPrompt: false,
   stream: [],
   target: randomInt(101, 999),
 };
@@ -33,6 +34,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         stream: insertAt(state.stream, state.cursor, payload),
         cursor: state.cursor + 1
+      };
+
+    case ActionTypes.SHOW_RULES_PROMPT:
+      return {
+        ...state,
+        showRulesPrompt: Boolean(payload),
       };
   }
 
