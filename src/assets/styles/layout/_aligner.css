@@ -6,6 +6,7 @@
 
 .aligner--alignCenter {
   justify-content: center;
+  align-items: center;
 }
 
 .aligner--justified {

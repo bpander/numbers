@@ -1,5 +1,5 @@
 import * as ActionTypes from 'constants/ActionTypes';
-import { flatten, insertAt, pullAt, times } from 'util/arrays';
+import { deleteAt, flatten, insertAt, pullAt, times } from 'util/arrays';
 import { randomInt } from 'util/numbers';
 
 
@@ -28,6 +28,13 @@ const reducer = (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
+
+    case ActionTypes.DELETE_AT_CURSOR:
+      return {
+        ...state,
+        stream: deleteAt(state.stream, state.cursor - 1, 1),
+        cursor: Math.max(0, state.cursor - 1),
+      };
 
     case ActionTypes.INSERT_AT_CURSOR:
       return {

@@ -37,6 +37,10 @@ export default class NumbersGame extends Component {
     this.props.actions.insertAtCursor(operator);
   };
 
+  onUndoClick = () => {
+    this.props.actions.deleteAtCursor();
+  };
+
   render() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
     const oIndex = getLocalIndex(cursor, BIT_DEPTH);
@@ -48,7 +52,9 @@ export default class NumbersGame extends Component {
           <div className="typ typ--uppercase typ--0.75x typ--inception2x">Make this</div>
           <div className="vr vr--1x"></div>
           <div className="aligner aligner--alignCenter">
+            <button onClick={this.onUndoClick}>undo</button>
             <Console message={target} />
+            <button>clear all</button>
           </div>
         </div>
 
