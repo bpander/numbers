@@ -89,19 +89,41 @@ export default class NumbersGame extends Component {
 
         <div className="vr vr--2x"></div>
 
-        <ul>
+        <table className="table">
           {times(Math.ceil((stream.length + 1) / BIT_DEPTH), i => {
             const start = i * BIT_DEPTH;
-            const equation = stream.slice(start, start + BIT_DEPTH);
-            equation[AUGEND_INDEX] = inventory[equation[AUGEND_INDEX]];
-            equation[ADDEND_INDEX] = inventory[equation[ADDEND_INDEX]];
+            const operator = stream[start + OPERATOR_INDEX];
+            const augend = inventory[stream[start + AUGEND_INDEX]];
+            const addend = inventory[stream[start + ADDEND_INDEX]];
+            const result = inventory[numbers.length + i];
+            const cursorClassName = 'table__cell--underscore';
             return (
-              <li>
-                <Step equation={equation} sum={inventory[numbers.length + i]} />
-              </li>
+              <tr>
+                <td className={`
+                  table__cell--small
+                  ${(cursor === start + AUGEND_INDEX) ? cursorClassName : ''}
+                `}>
+                  {augend}
+                </td>
+                <td className={`
+                  table__cell--small
+                  ${(cursor === start + OPERATOR_INDEX) ? cursorClassName : ''}
+                `}>
+                  {operator}
+                </td>
+                <td className={`
+                  table__cell--small
+                  ${(cursor === start + ADDEND_INDEX) ? cursorClassName : ''}
+                `}>
+                  {addend}
+                </td>
+                {(result) && (
+                  <td>= {result}</td>
+                )}
+              </tr>
             );
           })}
-        </ul>
+        </table>
       </div>
     );
   }

@@ -1,0 +1,17 @@
+
+.table {
+  display: inline-table;
+  table-layout: fixed;
+}
+
+.table__cell--small {
+  width: 20px;
+}
+
+.table__cell--underscore {
+  border-bottom: solid 1px black;
+}
+
+.table__cell--underscore:empty:after {
+  content: "\a0";
+}

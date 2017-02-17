@@ -16,10 +16,14 @@ const Step = props => {
       <span>
         {equation[ADDEND_INDEX]}
       </span>
-      <span>=</span>
-      <span>
-        {sum}
-      </span>
+      {(sum) && (
+        <span>
+          <span>=</span>
+          <span>
+            {sum}
+          </span>
+        </span>
+      )}
     </div>
   );
 };

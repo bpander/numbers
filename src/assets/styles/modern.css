@@ -15,6 +15,7 @@
 /* Containers */
 @import "container/_bubble";
 @import "container/_console";
+@import "container/_table";
 @import "container/_tier";
 
 /* Content */
