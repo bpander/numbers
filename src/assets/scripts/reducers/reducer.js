@@ -29,6 +29,13 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
 
+    case ActionTypes.START_OVER:
+      return {
+        ...state,
+        stream: [],
+        cursor: 0,
+      };
+
     case ActionTypes.DELETE_AT_CURSOR:
       return {
         ...state,

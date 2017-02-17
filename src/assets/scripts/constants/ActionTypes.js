@@ -1,4 +1,5 @@
 
+export const START_OVER = 'START_OVER';
 export const DELETE_AT_CURSOR = 'DELETE_AT_CURSOR';
 export const INSERT_AT_CURSOR = 'INSERT_AT_CURSOR';
 export const SHOW_RULES_PROMPT = 'SHOW_RULES_PROMPT';

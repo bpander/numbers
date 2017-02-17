@@ -1,6 +1,8 @@
 import * as ActionTypes from 'constants/ActionTypes';
 
 
+export const startOver = () => ({ type: ActionTypes.START_OVER });
+
 export const insertAtCursor = value => ({ type: ActionTypes.INSERT_AT_CURSOR, payload: value });
 
 export const deleteAtCursor = () => ({ type: ActionTypes.DELETE_AT_CURSOR });

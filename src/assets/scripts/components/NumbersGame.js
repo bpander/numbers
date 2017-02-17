@@ -15,6 +15,10 @@ import { getLocalIndex } from 'util/streams';
 
 export default class NumbersGame extends Component {
 
+  onStartOverClick = () => {
+    this.props.actions.startOver();
+  };
+
   onNumbleClick = index => () => {
     const { cursor, inventory, stream } = this.props;
     const oIndex = getLocalIndex(cursor, BIT_DEPTH);
@@ -54,7 +58,7 @@ export default class NumbersGame extends Component {
           <div className="aligner aligner--alignCenter">
             <button onClick={this.onUndoClick}>undo</button>
             <Console message={target} />
-            <button>clear all</button>
+            <button onClick={this.onStartOverClick}>start over</button>
           </div>
         </div>
 
