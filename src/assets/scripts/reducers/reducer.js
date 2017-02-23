@@ -1,6 +1,7 @@
 import * as ActionTypes from 'constants/ActionTypes';
 import { deleteAt, flatten, insertAt, pullAt, times } from 'util/arrays';
 import { randomInt } from 'util/numbers';
+import { createSolver, rpnCombinations } from 'util/solver';
 
 
 const largeSet = [ 25, 50, 75, 100 ];
@@ -18,11 +19,20 @@ const oneBigRestSmall = () => {
 
 const initialState = {
   cursor: 0,
-  numbers: oneBigRestSmall(),
+  numbers: [],
   showRulesPrompt: false,
   stream: [],
-  target: randomInt(101, 499),
+  target: 0,
 };
+
+const solver = createSolver(rpnCombinations(6));
+let result = { success: false };
+while (!result.success) {
+  initialState.numbers = oneBigRestSmall();
+  initialState.target = randomInt(101, 499);
+  result = solver(initialState.numbers, initialState.target);
+  console.log(result);
+}
 
 const reducer = (state = initialState, action) => {
   const { payload } = action;
