@@ -1,7 +1,7 @@
 import { noop } from 'util/functions';
 
 
-export const deleteAt = (array = [], index, quantity) => {
+export const deleteAt = (array = [], index, quantity = 1) => {
   const copy = [ ...array ];
   copy.splice(index, quantity);
   return copy;

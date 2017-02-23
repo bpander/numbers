@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
 import { times } from 'util/arrays';
-import { solver } from 'util/numbers';
+import { solve } from 'util/numbers';
 
 
 const getNumbers = state => state.numbers;
@@ -19,7 +19,7 @@ export const getInventory = createSelector(
       const operator = stream[start + OPERATOR_INDEX];
       const augend = inventory[stream[start + AUGEND_INDEX]];
       const addend = inventory[stream[start + ADDEND_INDEX]];
-      inventory.push(solver(operator, augend, addend));
+      inventory.push(solve(operator, augend, addend));
     });
 
     return inventory;

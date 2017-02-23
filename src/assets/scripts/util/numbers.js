@@ -13,7 +13,7 @@ export const randomInt = (min, max) => {
   return Math.round(Math.random() * delta + min);
 };
 
-export const solver = (operator, n1, n2) => {
+export const solve = (operator, n1, n2) => {
   switch (operator) {
     case OperatorTypes.ADD: return n1 + n2;
     case OperatorTypes.SUB: return n1 - n2;

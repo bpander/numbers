@@ -9,7 +9,7 @@ import Step from 'components/Step';
 import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
 import { times } from 'util/arrays';
-import { isWholeNumber, solver } from 'util/numbers';
+import { isWholeNumber, solve } from 'util/numbers';
 import { getLocalIndex } from 'util/streams';
 
 
@@ -27,7 +27,7 @@ export default class NumbersGame extends Component {
       if (operator === OperatorTypes.DIV) {
         const augend = inventory[stream[cursor - (ADDEND_INDEX - AUGEND_INDEX)]];
         const addend = inventory[index];
-        const solution = solver(operator, augend, addend);
+        const solution = solve(operator, augend, addend);
         if (!isWholeNumber(solution)) {
           this.props.actions.showRulesPrompt();
           return;

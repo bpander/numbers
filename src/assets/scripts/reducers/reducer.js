@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
     case ActionTypes.DELETE_AT_CURSOR:
       return {
         ...state,
-        stream: deleteAt(state.stream, state.cursor - 1, 1),
+        stream: deleteAt(state.stream, state.cursor - 1),
         cursor: Math.max(0, state.cursor - 1),
       };
 
