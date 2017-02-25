@@ -26,18 +26,30 @@ const initialState = {
 };
 
 const solver = createSolver(rpnCombinations(6));
-let result = { success: false };
-while (!result.success) {
-  initialState.numbers = oneBigRestSmall();
-  initialState.target = randomInt(101, 499);
-  result = solver(initialState.numbers, initialState.target);
-  console.log(result);
-}
 
 const reducer = (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
+
+    case ActionTypes.GET_NEW_NUMBERS: {
+      let numbers;
+      let target;
+      let result = { success: false };
+      while (!result.success) {
+        numbers = oneBigRestSmall();
+        target = randomInt(101, 499);
+        result = solver(numbers, target);
+        console.log(result);
+      }
+      return {
+        ...state,
+        numbers,
+        target,
+        cursor: 0,
+        stream: [],
+      };
+    }
 
     case ActionTypes.START_OVER:
       return {

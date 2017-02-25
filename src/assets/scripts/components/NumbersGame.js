@@ -15,14 +15,18 @@ import { getLocalIndex } from 'util/streams';
 
 export default class NumbersGame extends Component {
 
+  onStartClick = () => {
+    this.props.actions.getNewNumbers();
+  };
+
   onStartOverClick = () => {
     this.props.actions.startOver();
   };
 
   onNumbleClick = index => () => {
     const { cursor, inventory, stream } = this.props;
-    const oIndex = getLocalIndex(cursor, BIT_DEPTH);
-    if (oIndex === ADDEND_INDEX) {
+    const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
+    if (tokenIndex === ADDEND_INDEX) {
       const operator = stream[cursor - (ADDEND_INDEX - OPERATOR_INDEX)];
       if (operator === OperatorTypes.DIV) {
         const augend = inventory[stream[cursor - (ADDEND_INDEX - AUGEND_INDEX)]];
@@ -45,11 +49,10 @@ export default class NumbersGame extends Component {
     this.props.actions.deleteAtCursor();
   };
 
-  render() {
+  renderRound() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
-    const oIndex = getLocalIndex(cursor, BIT_DEPTH);
-    const isOperatorIndex = oIndex === OPERATOR_INDEX;
-
+    const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
+    const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
     return (
       <div>
         <div className="typ typ--alignCenter">
@@ -136,5 +139,12 @@ export default class NumbersGame extends Component {
         </table>
       </div>
     );
+  }
+
+  render() {
+    if (this.props.numbers.length < 1) {
+      return <button onClick={this.onStartClick}>start</button>;
+    }
+    return this.renderRound();
   }
 };
