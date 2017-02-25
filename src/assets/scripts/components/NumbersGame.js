@@ -2,6 +2,7 @@ import Inferno from 'inferno';
 import Component from 'inferno-component';
 
 import Console from 'components/Console';
+import Modal from 'components/Modal';
 import Numble from 'components/Numble';
 import Operator from 'components/Operator';
 import Step from 'components/Step';
@@ -49,7 +50,7 @@ export default class NumbersGame extends Component {
     this.props.actions.deleteAtCursor();
   };
 
-  renderRound() {
+  renderBoard() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
@@ -145,6 +146,24 @@ export default class NumbersGame extends Component {
     if (this.props.numbers.length < 1) {
       return <button onClick={this.onStartClick}>start</button>;
     }
-    return this.renderRound();
+    const { inventory, target } = this.props;
+    return (
+      <div>
+        {(inventory[inventory.length - 1] === target) && (
+          <Modal>
+            <div className="card">
+              <div className="well well--2x">
+                <div>You did it!</div>
+                <div className="vr vr--2x"></div>
+                <button onClick={this.onStartClick}>
+                  Keep going
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
+        {this.renderBoard()}
+      </div>
+    );
   }
 };
