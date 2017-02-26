@@ -40,7 +40,8 @@ export default class NumbersGame extends Component {
   };
 
   onNumbleClick = index => () => {
-    const { cursor, inventory, stream } = this.props;
+    const { inventory, stream } = this.props;
+    const cursor = stream.length;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     if (tokenIndex === ADDEND_INDEX) {
       const operator = stream[cursor - (ADDEND_INDEX - OPERATOR_INDEX)];
@@ -54,24 +55,24 @@ export default class NumbersGame extends Component {
         }
       }
     }
-    this.props.actions.insertAtCursor(index);
+    this.props.actions.streamPush(index);
   };
 
   onOperatorClick = operator => () => {
-    this.props.actions.insertAtCursor(operator);
+    this.props.actions.streamPush(operator);
   };
 
   onUndoClick = () => {
-    this.props.actions.deleteAtCursor();
+    this.props.actions.streamPop();
   };
 
   getSteps() {
     if (this.state.hasGivenUp) {
       return this.props.solution;
     }
-    const tail = null; // Force a blank cursor at the end of the stream
+    const cursor = null; // Force a blank cursor at the end of the stream
     const { inventory, stream } = this.props;
-    const steps = chunk(stream.concat(tail), BIT_DEPTH).map(step => {
+    const steps = chunk(stream.concat(cursor), BIT_DEPTH).map(step => {
       return [
         inventory[step[AUGEND_INDEX]],
         step[OPERATOR_INDEX],
@@ -82,8 +83,9 @@ export default class NumbersGame extends Component {
   }
 
   renderBoard() {
-    const { actions, cursor, inventory, numbers, stream, target } = this.props;
+    const { actions, inventory, numbers, stream, target } = this.props;
     const { hasGivenUp } = this.state;
+    const cursor = stream.length;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
     const steps = this.getSteps();

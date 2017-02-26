@@ -9,7 +9,6 @@ import { getInventory } from 'selectors/selectors';
 
 const mapStateToProps = state => {
   return {
-    cursor: state.cursor,
     inventory: getInventory(state),
     numbers: state.numbers,
     showRulesPrompt: state.showRulesPrompt,

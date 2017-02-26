@@ -18,7 +18,6 @@ const oneBigRestSmall = () => {
 };
 
 const initialState = {
-  cursor: 0,
   numbers: [],
   showRulesPrompt: false,
   solution: [],
@@ -47,7 +46,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         numbers,
         target,
-        cursor: 0,
         solution: result.steps,
         stream: [],
       };
@@ -57,21 +55,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         stream: [],
-        cursor: 0,
       };
 
-    case ActionTypes.DELETE_AT_CURSOR:
+    case ActionTypes.STREAM_POP:
       return {
         ...state,
-        stream: deleteAt(state.stream, state.cursor - 1),
-        cursor: Math.max(0, state.cursor - 1),
+        stream: deleteAt(state.stream, state.stream.length - 1),
       };
 
-    case ActionTypes.INSERT_AT_CURSOR:
+    case ActionTypes.STREAM_PUSH:
       return {
         ...state,
-        stream: insertAt(state.stream, state.cursor, payload),
-        cursor: state.cursor + 1,
+        stream: insertAt(state.stream, state.stream.length, payload),
       };
 
     case ActionTypes.SHOW_RULES_PROMPT:
