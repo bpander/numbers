@@ -13,6 +13,7 @@ const mapStateToProps = state => {
     inventory: getInventory(state),
     numbers: state.numbers,
     showRulesPrompt: state.showRulesPrompt,
+    solution: state.solution,
     stream: state.stream,
     target: state.target,
   };
@@ -26,7 +27,7 @@ const mapDispatchToProps = dispatch => {
 export default class App extends Component {
 
   render() {
-    const { actions, cursor, inventory, numbers, showRulesPrompt, stream, target } = this.props;
+    const { showRulesPrompt, ...rest } = this.props;
     return (
       <div className="wrap">
 
@@ -41,7 +42,7 @@ export default class App extends Component {
         </div>
 
         <div className="well well--2x">
-          <NumbersGame {...{ actions, cursor, inventory, numbers, stream, target }} />
+          <NumbersGame {...rest} />
         </div>
       </div>
     );

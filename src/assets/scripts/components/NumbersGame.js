@@ -9,7 +9,7 @@ import Step from 'components/Step';
 
 import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
-import { times } from 'util/arrays';
+import { chunk, times } from 'util/arrays';
 import { isWholeNumber, solve } from 'util/numbers';
 import { getLocalIndex } from 'util/streams';
 
@@ -65,11 +65,30 @@ export default class NumbersGame extends Component {
     this.props.actions.deleteAtCursor();
   };
 
+  getSteps() {
+    if (this.state.hasGivenUp) {
+      return this.props.solution;
+    }
+    let head; // Force a cursor at the end of the stream
+    const { inventory, stream } = this.props;
+    const steps = chunk(stream.concat(head), BIT_DEPTH).map(step => {
+      return [
+        inventory[step[AUGEND_INDEX]],
+        step[OPERATOR_INDEX],
+        inventory[step[ADDEND_INDEX]],
+      ];
+    });
+    return steps;
+  }
+
   renderBoard() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
     const { hasGivenUp } = this.state;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
+    const steps = this.getSteps();
+    const cursorClassName = 'table__cell--underscore';
+
     return (
       <div>
         <div className="typ typ--alignCenter">
@@ -120,36 +139,26 @@ export default class NumbersGame extends Component {
         <div className="vr vr--2x"></div>
 
         <table className="table">
-          {times(Math.ceil((stream.length + 1) / BIT_DEPTH), i => {
+          {steps.map((step, i) => {
             const start = i * BIT_DEPTH;
-            const operator = stream[start + OPERATOR_INDEX];
-            const augend = inventory[stream[start + AUGEND_INDEX]];
-            const addend = inventory[stream[start + ADDEND_INDEX]];
-            const result = inventory[numbers.length + i];
-            const cursorClassName = 'table__cell--underscore';
+            const result = (!step.includes(undefined))
+              ? solve(
+                step[OPERATOR_INDEX],
+                step[AUGEND_INDEX],
+                step[ADDEND_INDEX],
+              )
+              : NaN;
             return (
-              <tr>
-                <td className={`
-                  table__cell--small
-                  ${(cursor === start + AUGEND_INDEX) ? cursorClassName : ''}
-                `}>
-                  {augend}
-                </td>
-                <td className={`
-                  table__cell--small
-                  ${(cursor === start + OPERATOR_INDEX) ? cursorClassName : ''}
-                `}>
-                  {operator}
-                </td>
-                <td className={`
-                  table__cell--small
-                  ${(cursor === start + ADDEND_INDEX) ? cursorClassName : ''}
-                `}>
-                  {addend}
-                </td>
-                {(result) && (
-                  <td>= {result}</td>
-                )}
+              <tr key={i}>
+                {step.map((token, j) => (
+                  <td className={`
+                    table__cell--small
+                    ${(start + j === cursor && !hasGivenUp) ? cursorClassName : ''}
+                  `}>
+                    {token}
+                  </td>
+                ))}
+                <td>{(!isNaN(result)) && `= ${result}`}</td>
               </tr>
             );
           })}

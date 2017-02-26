@@ -21,6 +21,7 @@ const initialState = {
   cursor: 0,
   numbers: [],
   showRulesPrompt: false,
+  solution: [],
   stream: [],
   target: 0,
 };
@@ -47,6 +48,7 @@ const reducer = (state = initialState, action) => {
         numbers,
         target,
         cursor: 0,
+        solution: result.steps,
         stream: [],
       };
     }

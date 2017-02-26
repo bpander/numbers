@@ -16,6 +16,10 @@
   cursor: pointer;
 }
 
+.bubble:disabled {
+  cursor: default;
+}
+
 .bubble--small {
   width: calc(((100vw - 100px - (5 * 2px)) / 6));
   height: calc(((100vw - 100px - (5 * 2px)) / 6));
