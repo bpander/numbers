@@ -69,9 +69,9 @@ export default class NumbersGame extends Component {
     if (this.state.hasGivenUp) {
       return this.props.solution;
     }
-    let head; // Force a cursor at the end of the stream
+    const tail = null; // Force a blank cursor at the end of the stream
     const { inventory, stream } = this.props;
-    const steps = chunk(stream.concat(head), BIT_DEPTH).map(step => {
+    const steps = chunk(stream.concat(tail), BIT_DEPTH).map(step => {
       return [
         inventory[step[AUGEND_INDEX]],
         step[OPERATOR_INDEX],
@@ -110,7 +110,7 @@ export default class NumbersGame extends Component {
         <ul className="aligner">
           {inventory.map((number, i) => {
             if (stream.includes(i)) {
-              return;
+              return null;
             }
             return (
               <li>
@@ -141,7 +141,7 @@ export default class NumbersGame extends Component {
         <table className="table">
           {steps.map((step, i) => {
             const start = i * BIT_DEPTH;
-            const result = (!step.includes(undefined))
+            const result = (step.length === BIT_DEPTH && step.every(token => token != null))
               ? solve(
                 step[OPERATOR_INDEX],
                 step[AUGEND_INDEX],

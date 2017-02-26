@@ -71,7 +71,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         stream: insertAt(state.stream, state.cursor, payload),
-        cursor: state.cursor + 1
+        cursor: state.cursor + 1,
       };
 
     case ActionTypes.SHOW_RULES_PROMPT:
