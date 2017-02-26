@@ -16,6 +16,21 @@ import { getLocalIndex } from 'util/streams';
 
 export default class NumbersGame extends Component {
 
+  state = {
+    hasGivenUp: false,
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const isNewGame = this.props.numbers !== nextProps.numbers;
+    if (isNewGame) {
+      this.setState({ hasGivenUp: false });
+    }
+  }
+
+  onGiveUpClick = () => {
+    this.setState({ hasGivenUp: true });
+  };
+
   onStartClick = () => {
     this.props.actions.getNewNumbers();
   };
@@ -52,6 +67,7 @@ export default class NumbersGame extends Component {
 
   renderBoard() {
     const { actions, cursor, inventory, numbers, stream, target } = this.props;
+    const { hasGivenUp } = this.state;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
     return (
@@ -60,9 +76,9 @@ export default class NumbersGame extends Component {
           <div className="typ typ--uppercase typ--0.75x typ--inception2x">Make this</div>
           <div className="vr vr--1x"></div>
           <div className="aligner aligner--alignCenter">
-            <button onClick={this.onUndoClick}>undo</button>
+            <button disabled={hasGivenUp} onClick={this.onUndoClick}>undo</button>
             <Console message={target} />
-            <button onClick={this.onStartOverClick}>start over</button>
+            <button disabled={hasGivenUp} onClick={this.onStartOverClick}>start over</button>
           </div>
         </div>
 
@@ -81,7 +97,7 @@ export default class NumbersGame extends Component {
               <li>
                 <Numble
                   value={number}
-                  disabled={isOperatorIndex}
+                  disabled={isOperatorIndex || hasGivenUp}
                   isDerived={i >= numbers.length}
                   onClick={this.onNumbleClick(i)}
                 />
@@ -94,7 +110,7 @@ export default class NumbersGame extends Component {
             <li>
               <Operator
                 type={operator}
-                disabled={!isOperatorIndex}
+                disabled={!isOperatorIndex || hasGivenUp}
                 onClick={this.onOperatorClick(operator)}
               />
             </li>
@@ -138,6 +154,14 @@ export default class NumbersGame extends Component {
             );
           })}
         </table>
+
+        <div>
+          {(this.state.hasGivenUp) ? (
+            <button onClick={this.onStartClick}>New game</button>
+          ) : (
+            <button onClick={this.onGiveUpClick}>Give up</button>
+          )}
+        </div>
       </div>
     );
   }
