@@ -9,13 +9,7 @@ export const getNewNumbers = () => ({ type: ActionTypes.GET_NEW_NUMBERS });
 
 export const startOver = () => ({ type: ActionTypes.START_OVER });
 
-export const streamPop = () => (dispatch, getState) => {
-  const { stream } = getState();
-  dispatch({
-    type: ActionTypes.UPDATE_STREAM,
-    payload: { stream: deleteAt(stream, stream.length - 1) },
-  });
-};
+export const streamPop = () => ({ type: ActionTypes.STREAM_POP });
 
 export const streamPush = value => (dispatch, getState) => {
   const state = getState();

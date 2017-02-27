@@ -1,5 +1,5 @@
 import * as ActionTypes from 'constants/ActionTypes';
-import { flatten, pullAt, times } from 'util/arrays';
+import { deleteAt, flatten, pullAt, times } from 'util/arrays';
 import { randomInt } from 'util/numbers';
 import { createSolver, rpnCombinations } from 'util/solver';
 
@@ -18,6 +18,7 @@ const oneBigRestSmall = () => {
 };
 
 const initialState = {
+  didUndo: false,
   numbers: [],
   pointSummary: [],
   score: 0,
@@ -49,6 +50,7 @@ const reducer = (state = initialState, action) => {
       }
       return {
         ...state,
+        didUndo: false,
         numbers,
         target,
         solution: result.steps,
@@ -59,7 +61,15 @@ const reducer = (state = initialState, action) => {
     case ActionTypes.START_OVER:
       return {
         ...state,
+        didUndo: true,
         stream: [],
+      };
+
+    case ActionTypes.STREAM_POP:
+      return {
+        ...state,
+        didUndo: true,
+        stream: deleteAt(state.stream, state.stream.length - 1),
       };
 
     case ActionTypes.UPDATE_STREAM:
