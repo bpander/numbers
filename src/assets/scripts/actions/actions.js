@@ -19,7 +19,7 @@ export const streamPush = value => (dispatch, getState) => {
   const inventory = getInventory({ numbers, stream: potentialStream });
   const latestNumber = last(inventory);
   if (!isWholeNumber(latestNumber)) {
-    return showRulesPrompt()(dispatch);
+    return dispatch(showRulesPrompt());
   }
   const { target } = state;
   const actions = [
