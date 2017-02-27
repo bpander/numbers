@@ -9,18 +9,24 @@ export const getNewNumbers = () => ({ type: ActionTypes.GET_NEW_NUMBERS });
 
 export const startOver = () => ({ type: ActionTypes.START_OVER });
 
-export const streamPop = stream => ({
-  type: ActionTypes.UPDATE_STREAM,
-  payload: { stream: deleteAt(stream, stream.length - 1) },
-});
+export const streamPop = () => (dispatch, getState) => {
+  const { stream } = getState();
+  dispatch({
+    type: ActionTypes.UPDATE_STREAM,
+    payload: { stream: deleteAt(stream, stream.length - 1) },
+  });
+};
 
-export const streamPush = ({ target, numbers, stream, value }) => dispatch => {
+export const streamPush = value => (dispatch, getState) => {
+  const state = getState();
+  const { numbers, stream } = state;
   const potentialStream = insertAt(stream, stream.length, value);
   const inventory = getInventory({ numbers, stream: potentialStream });
   const latestNumber = last(inventory);
   if (!isWholeNumber(latestNumber)) {
     return showRulesPrompt()(dispatch);
   }
+  const { target } = state;
   const actions = [
     { type: ActionTypes.UPDATE_STREAM, payload: { stream: potentialStream } },
   ];
