@@ -19,11 +19,12 @@ const oneBigRestSmall = () => {
 
 const initialState = {
   didUndo: false,
+  finish: 0,
   numbers: [],
-  pointSummary: [],
   score: 0,
   showRulesPrompt: false,
   solution: [],
+  start: 0,
   stream: [],
   target: 0,
 };
@@ -50,10 +51,12 @@ const reducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        didUndo: false,
         numbers,
         target,
+        didUndo: false,
+        finish: 0,
         solution: result.steps,
+        start: Date.now(),
         stream: [],
       };
     }
@@ -72,10 +75,16 @@ const reducer = (state = initialState, action) => {
         stream: deleteAt(state.stream, state.stream.length - 1),
       };
 
+    case ActionTypes.UPDATE_FINISH:
+      return {
+        ...state,
+        finish: payload.finish,
+      };
+
     case ActionTypes.UPDATE_STREAM:
       return {
         ...state,
-        stream: action.payload.stream,
+        stream: payload.stream,
       };
 
     case ActionTypes.SHOW_RULES_PROMPT:

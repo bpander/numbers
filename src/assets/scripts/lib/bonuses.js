@@ -13,11 +13,11 @@ export const usedAll = (runningTotal, state) => {
 export const difficulty = (runningTotal, state) => {
   switch (state.difficulty) {
     // TODO: Other difficulty modifiers go here
-    default: return runningTotal * 0.2;
+    default: return runningTotal * PointValues.REGULAR_DIFFICULTY_MODIFIER;
   }
 };
 
 export const speed = (runningTotal, state) => {
   const { start, finish } = state;
-  return 1 / (finish - start) * 1000;
+  return Math.floor(1 / (finish - start) * 1e7);
 };
