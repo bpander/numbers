@@ -26,6 +26,10 @@ export const insertAt = (array = [], index, ...values) => {
   return copy;
 };
 
+export const last = (array = []) => {
+  return array[array.length - 1];
+};
+
 export const pullAt = (array = [], index = 0) => {
   return array.splice(index, 1)[0];
 };

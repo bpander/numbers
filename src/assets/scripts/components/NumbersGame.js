@@ -9,8 +9,8 @@ import Step from 'components/Step';
 
 import * as OperatorTypes from 'constants/OperatorTypes';
 import { BIT_DEPTH, AUGEND_INDEX, OPERATOR_INDEX, ADDEND_INDEX } from 'constants/StreamConstants';
-import { chunk, times } from 'util/arrays';
-import { isWholeNumber, solve } from 'util/numbers';
+import { chunk } from 'util/arrays';
+import { solve } from 'util/numbers';
 import { getLocalIndex } from 'util/streams';
 
 
@@ -39,27 +39,9 @@ export default class NumbersGame extends Component {
     this.props.actions.startOver();
   };
 
-  onNumbleClick = index => () => {
-    const { inventory, stream } = this.props;
-    const cursor = stream.length;
-    const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
-    if (tokenIndex === ADDEND_INDEX) {
-      const operator = stream[cursor - (ADDEND_INDEX - OPERATOR_INDEX)];
-      if (operator === OperatorTypes.DIV) {
-        const augend = inventory[stream[cursor - (ADDEND_INDEX - AUGEND_INDEX)]];
-        const addend = inventory[index];
-        const solution = solve(operator, augend, addend);
-        if (!isWholeNumber(solution)) {
-          this.props.actions.showRulesPrompt();
-          return;
-        }
-      }
-    }
-    this.props.actions.streamPush(index);
-  };
-
-  onOperatorClick = operator => () => {
-    this.props.actions.streamPush(operator);
+  onTokenClick = index => () => {
+    const { numbers, stream } = this.props;
+    this.props.actions.streamPush(numbers, stream, index);
   };
 
   onUndoClick = () => {
@@ -120,7 +102,7 @@ export default class NumbersGame extends Component {
                   value={number}
                   disabled={isOperatorIndex || hasGivenUp}
                   isDerived={i >= numbers.length}
-                  onClick={this.onNumbleClick(i)}
+                  onClick={this.onTokenClick(i)}
                 />
               </li>
             );
@@ -132,7 +114,7 @@ export default class NumbersGame extends Component {
               <Operator
                 type={operator}
                 disabled={!isOperatorIndex || hasGivenUp}
-                onClick={this.onOperatorClick(operator)}
+                onClick={this.onTokenClick(operator)}
               />
             </li>
           ))}

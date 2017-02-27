@@ -57,16 +57,10 @@ const reducer = (state = initialState, action) => {
         stream: [],
       };
 
-    case ActionTypes.STREAM_POP:
+    case ActionTypes.UPDATE_STREAM:
       return {
         ...state,
-        stream: deleteAt(state.stream, state.stream.length - 1),
-      };
-
-    case ActionTypes.STREAM_PUSH:
-      return {
-        ...state,
-        stream: insertAt(state.stream, state.stream.length, payload),
+        stream: action.payload.stream,
       };
 
     case ActionTypes.SHOW_RULES_PROMPT:
