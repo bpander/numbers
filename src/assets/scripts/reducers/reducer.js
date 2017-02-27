@@ -1,5 +1,5 @@
 import * as ActionTypes from 'constants/ActionTypes';
-import { deleteAt, flatten, insertAt, pullAt, times } from 'util/arrays';
+import { flatten, pullAt, times } from 'util/arrays';
 import { randomInt } from 'util/numbers';
 import { createSolver, rpnCombinations } from 'util/solver';
 
@@ -19,6 +19,8 @@ const oneBigRestSmall = () => {
 
 const initialState = {
   numbers: [],
+  pointSummary: [],
+  score: 0,
   showRulesPrompt: false,
   solution: [],
   stream: [],
@@ -31,6 +33,9 @@ const reducer = (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
+
+    case ActionTypes.ADD_TO_SCORE:
+      return { ...state, score: state.score + action.payload.points };
 
     case ActionTypes.GET_NEW_NUMBERS: {
       let numbers;

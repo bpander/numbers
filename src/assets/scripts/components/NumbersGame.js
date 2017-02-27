@@ -39,13 +39,13 @@ export default class NumbersGame extends Component {
     this.props.actions.startOver();
   };
 
-  onTokenClick = index => () => {
-    const { numbers, stream } = this.props;
-    this.props.actions.streamPush(numbers, stream, index);
+  onTokenClick = value => () => {
+    const { target, numbers, stream } = this.props;
+    this.props.actions.streamPush({ target, numbers, stream, value });
   };
 
   onUndoClick = () => {
-    this.props.actions.streamPop();
+    this.props.actions.streamPop(this.props.stream);
   };
 
   getSteps() {

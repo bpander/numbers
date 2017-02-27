@@ -1,5 +1,7 @@
 
+export const ADD_TO_SCORE = 'ADD_TO_SCORE';
 export const GET_NEW_NUMBERS = 'GET_NEW_NUMBERS';
 export const SHOW_RULES_PROMPT = 'SHOW_RULES_PROMPT';
 export const START_OVER = 'START_OVER';
 export const UPDATE_STREAM = 'UPDATE_STREAM';
+export const UPDATE_POINT_SUMMARY = 'UPDATE_POINT_SUMMARY';
