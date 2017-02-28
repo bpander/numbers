@@ -8,6 +8,8 @@ import { isWholeNumber } from 'util/numbers';
 
 export const getNewNumbers = () => ({ type: ActionTypes.GET_NEW_NUMBERS });
 
+export const giveUp = () => ({ type: ActionTypes.GIVE_UP });
+
 export const startOver = () => ({ type: ActionTypes.START_OVER });
 
 export const streamPop = () => ({ type: ActionTypes.STREAM_POP });

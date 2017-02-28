@@ -16,19 +16,8 @@ import { getLocalIndex } from 'util/streams';
 
 export default class NumbersGame extends Component {
 
-  state = {
-    hasGivenUp: false,
-  };
-
-  componentWillReceiveProps(nextProps) {
-    const isNewGame = this.props.numbers !== nextProps.numbers;
-    if (isNewGame) {
-      this.setState({ hasGivenUp: false });
-    }
-  }
-
   onGiveUpClick = () => {
-    this.setState({ hasGivenUp: true });
+    this.props.actions.giveUp();
   };
 
   onStartClick = () => {
@@ -48,7 +37,7 @@ export default class NumbersGame extends Component {
   };
 
   getSteps() {
-    if (this.state.hasGivenUp) {
+    if (this.props.hasGivenUp) {
       return this.props.solution;
     }
     const cursor = null; // Force a blank cursor at the end of the stream
@@ -64,8 +53,7 @@ export default class NumbersGame extends Component {
   }
 
   renderBoard() {
-    const { actions, inventory, numbers, stream, target } = this.props;
-    const { hasGivenUp } = this.state;
+    const { actions, hasGivenUp, inventory, numbers, stream, target } = this.props;
     const cursor = stream.length;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
@@ -148,7 +136,7 @@ export default class NumbersGame extends Component {
         </table>
 
         <div>
-          {(this.state.hasGivenUp) ? (
+          {(hasGivenUp) ? (
             <button onClick={this.onStartClick}>New game</button>
           ) : (
             <button onClick={this.onGiveUpClick}>Give up</button>

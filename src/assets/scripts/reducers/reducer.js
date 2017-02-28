@@ -20,6 +20,7 @@ const oneBigRestSmall = () => {
 const initialState = {
   didUndo: false,
   finish: 0,
+  hasGivenUp: false,
   numbers: [],
   score: 0,
   showRulesPrompt: false,
@@ -55,11 +56,19 @@ const reducer = (state = initialState, action) => {
         target,
         didUndo: false,
         finish: 0,
+        hasGivenUp: false,
         solution: result.steps,
         start: Date.now(),
         stream: [],
       };
     }
+
+    case ActionTypes.GIVE_UP:
+      return {
+        ...state,
+        hasGivenUp: true,
+        score: 0,
+      };
 
     case ActionTypes.START_OVER:
       return {
