@@ -1,6 +1,6 @@
 
 export const ADD_TO_SCORE = 'ADD_TO_SCORE';
-export const GET_NEW_NUMBERS = 'GET_NEW_NUMBERS';
+export const START_NEW_ROUND = 'START_NEW_ROUND';
 export const GIVE_UP = 'GIVE_UP';
 export const SHOW_RULES_PROMPT = 'SHOW_RULES_PROMPT';
 export const START_OVER = 'START_OVER';

@@ -2,11 +2,40 @@ import { batchActions } from 'redux-batched-actions';
 import * as ActionTypes from 'constants/ActionTypes';
 import * as bonuses from 'lib/bonuses';
 import { getInventory } from 'selectors/selectors';
-import { deleteAt, insertAt, last } from 'util/arrays';
-import { isWholeNumber } from 'util/numbers';
+import { deleteAt, flatten, insertAt, last, pullAt, times } from 'util/arrays';
+import { isWholeNumber, randomInt } from 'util/numbers';
+import { createSolver, rpnCombinations } from 'util/solver';
 
 
-export const getNewNumbers = () => ({ type: ActionTypes.GET_NEW_NUMBERS });
+const largeSet = [ 25, 50, 75, 100 ];
+const smallSet = [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10 ];
+const oneBigRestSmall = () => {
+  const _largeSet = [ ...largeSet ];
+  const _smallSet = [ ...smallSet ];
+  const numbers = flatten([
+    times(1, () => pullAt(_largeSet, randomInt(0, _largeSet.length - 1))),
+    times(5, () => pullAt(_smallSet, randomInt(0, _smallSet.length - 1))),
+  ]);
+
+  return numbers;
+};
+
+const solver = createSolver(rpnCombinations(6));
+
+
+export const getNewNumbers = () => {
+  let numbers;
+  let target;
+  let result = { success: false };
+  while (!result.success) {
+    numbers = oneBigRestSmall();
+    target = randomInt(101, 499);
+    result = solver(numbers, target);
+    console.log(result);
+  }
+  const solution = result.steps;
+  return { type: ActionTypes.START_NEW_ROUND, payload: { numbers, target, solution } };
+};
 
 export const giveUp = () => ({ type: ActionTypes.GIVE_UP });
 
