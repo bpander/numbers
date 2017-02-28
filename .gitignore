@@ -1,7 +1,6 @@
 docs/
 node/
 node_modules/
-web/
 .idea/
 
 .DS_Store
