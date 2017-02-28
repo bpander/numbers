@@ -21,4 +21,5 @@
 @import "container/_tier";
 
 /* Content */
+@import "content/_btn";
 @import "content/_typ";

@@ -158,7 +158,7 @@ export default class NumbersGame extends Component {
 
         <div className="typ typ--alignCenter">
           {(hasGivenUp) ? (
-            <button onClick={this.onStartClick}>New game</button>
+            <button onClick={this.onStartClick} className="btn">New game</button>
           ) : (
             <button onClick={this.onGiveUpClick}>Give up</button>
           )}
