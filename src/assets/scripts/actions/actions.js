@@ -1,7 +1,7 @@
 import { batchActions } from 'redux-batched-actions';
 import * as ActionTypes from 'constants/ActionTypes';
 import * as bonuses from 'lib/bonuses';
-import { getInventory } from 'selectors/selectors';
+import { getInventory, getPointSummary } from 'selectors/selectors';
 import { deleteAt, flatten, insertAt, last, pullAt, times } from 'util/arrays';
 import { isWholeNumber, randomInt } from 'util/numbers';
 import { createSolver, rpnCombinations } from 'util/solver';
@@ -59,12 +59,10 @@ export const streamPush = value => (dispatch, getState) => {
   if (latestNumber === target) {
     const finish = Date.now();
     const newState = { ...state, finish };
-    const points = Object.values(bonuses).reduce((runningTotal, bonus) => {
-      return runningTotal + bonus(runningTotal, newState);
-    }, 0);
+    const pointSummary = getPointSummary(newState);
     actions.push(
       { type: ActionTypes.UPDATE_FINISH, payload: { finish } },
-      { type: ActionTypes.ADD_TO_SCORE, payload: { points } },
+      { type: ActionTypes.ADD_TO_SCORE, payload: { points: pointSummary.total } },
     );
   }
   dispatch(batchActions(actions));

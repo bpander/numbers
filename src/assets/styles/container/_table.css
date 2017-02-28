@@ -12,6 +12,10 @@
   border-bottom: solid 1px black;
 }
 
+.table__cell--alignCenter {
+  text-align: center;
+}
+
 .table__cell--underscore:empty:after {
   content: "\a0";
 }

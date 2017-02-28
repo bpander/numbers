@@ -4,14 +4,17 @@ import { connect } from 'inferno-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from 'actions/actions';
 import NumbersGame from 'components/NumbersGame';
-import { getInventory } from 'selectors/selectors';
+import { getInventory, getPointSummary } from 'selectors/selectors';
+import { last } from 'util/arrays';
 
 
 const mapStateToProps = state => {
+  const inventory = getInventory(state);
   return {
+    inventory,
     hasGivenUp: state.hasGivenUp,
-    inventory: getInventory(state),
     numbers: state.numbers,
+    pointSummary: (last(inventory) === state.target) ? getPointSummary(state) : null,
     score: state.score,
     showRulesPrompt: state.showRulesPrompt,
     solution: state.solution,

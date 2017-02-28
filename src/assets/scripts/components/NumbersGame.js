@@ -5,6 +5,7 @@ import Console from 'components/Console';
 import Modal from 'components/Modal';
 import Numble from 'components/Numble';
 import Operator from 'components/Operator';
+import PointSummary from 'components/PointSummary';
 import Step from 'components/Step';
 
 import * as OperatorTypes from 'constants/OperatorTypes';
@@ -124,33 +125,38 @@ export default class NumbersGame extends Component {
 
         <div className="vr vr--2x"></div>
 
-        <table className="table">
-          {steps.map((step, i) => {
-            const start = i * BIT_DEPTH;
-            const result = (step.length === BIT_DEPTH && step.every(token => token != null))
-              ? solve(
-                step[OPERATOR_INDEX],
-                step[AUGEND_INDEX],
-                step[ADDEND_INDEX],
-              )
-              : NaN;
-            return (
-              <tr key={i}>
-                {step.map((token, j) => (
-                  <td className={`
-                    table__cell--small
-                    ${(start + j === cursor && !hasGivenUp) ? cursorClassName : ''}
-                  `}>
-                    {token}
-                  </td>
-                ))}
-                <td>{(!isNaN(result)) && `= ${result}`}</td>
-              </tr>
-            );
-          })}
-        </table>
+        <div className="aligner aligner--alignCenter">
+          <table className="table">
+            {steps.map((step, i) => {
+              const start = i * BIT_DEPTH;
+              const result = (step.length === BIT_DEPTH && step.every(token => token != null))
+                ? solve(
+                  step[OPERATOR_INDEX],
+                  step[AUGEND_INDEX],
+                  step[ADDEND_INDEX],
+                )
+                : NaN;
+              return (
+                <tr key={i}>
+                  {step.map((token, j) => (
+                    <td className={`
+                      table__cell--small
+                      ${(j === OPERATOR_INDEX) ? 'table__cell--alignCenter' : ''}
+                      ${(start + j === cursor && !hasGivenUp) ? cursorClassName : ''}
+                    `}>
+                      {token}
+                    </td>
+                  ))}
+                  <td>{(!isNaN(result)) && `= ${result}`}</td>
+                </tr>
+              );
+            })}
+          </table>
+        </div>
 
-        <div>
+        <div className="vr vr--2x"></div>
+
+        <div className="typ typ--alignCenter">
           {(hasGivenUp) ? (
             <button onClick={this.onStartClick}>New game</button>
           ) : (
@@ -165,7 +171,7 @@ export default class NumbersGame extends Component {
     if (this.props.numbers.length < 1) {
       return <button onClick={this.onStartClick}>start</button>;
     }
-    const { inventory, target } = this.props;
+    const { inventory, pointSummary, target } = this.props;
     return (
       <div>
         {(inventory[inventory.length - 1] === target) && (
@@ -173,6 +179,10 @@ export default class NumbersGame extends Component {
             <div className="card">
               <div className="well well--2x">
                 <div>You did it!</div>
+                <div className="vr vr--2x"></div>
+
+                <PointSummary {...pointSummary} />
+
                 <div className="vr vr--2x"></div>
                 <button onClick={this.onStartClick}>
                   Keep going
