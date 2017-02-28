@@ -12,6 +12,7 @@ const mapStateToProps = state => {
     hasGivenUp: state.hasGivenUp,
     inventory: getInventory(state),
     numbers: state.numbers,
+    score: state.score,
     showRulesPrompt: state.showRulesPrompt,
     solution: state.solution,
     stream: state.stream,

@@ -11,6 +11,7 @@ $typ-base: 16;
 .typ--inception2x { letter-spacing: 0.1em; }
 
 .typ--alignCenter { text-align: center; }
+.typ--alignRight { text-align: right; }
 
 .typ--uppercase { text-transform: uppercase; }
 

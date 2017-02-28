@@ -53,7 +53,7 @@ export default class NumbersGame extends Component {
   }
 
   renderBoard() {
-    const { actions, hasGivenUp, inventory, numbers, stream, target } = this.props;
+    const { actions, hasGivenUp, inventory, numbers, score, stream, target } = this.props;
     const cursor = stream.length;
     const tokenIndex = getLocalIndex(cursor, BIT_DEPTH);
     const isOperatorIndex = tokenIndex === OPERATOR_INDEX;
@@ -62,13 +62,28 @@ export default class NumbersGame extends Component {
 
     return (
       <div>
-        <div className="typ typ--alignCenter">
-          <div className="typ typ--uppercase typ--0.75x typ--inception2x">Make this</div>
-          <div className="vr vr--1x"></div>
-          <div className="aligner aligner--alignCenter">
-            <button disabled={hasGivenUp} onClick={this.onUndoClick}>undo</button>
-            <Console message={target} />
-            <button disabled={hasGivenUp} onClick={this.onStartOverClick}>start over</button>
+        <div className="aligner aligner--justified">
+          <div className="aligner__item">
+            High score
+          </div>
+
+          <div className="aligner__item">
+            <div className="typ typ--alignCenter">
+              <div className="typ typ--uppercase typ--0.75x typ--inception2x">Make this</div>
+              <div className="vr vr--1x"></div>
+              <div className="aligner aligner--alignCenter">
+                <button disabled={hasGivenUp} onClick={this.onUndoClick}>undo</button>
+                <Console message={target} />
+                <button disabled={hasGivenUp} onClick={this.onStartOverClick}>start over</button>
+              </div>
+            </div>
+          </div>
+
+          <div className="aligner__item">
+            <div className="typ typ--alignRight">
+              <div>Score</div>
+              <div>{score}</div>
+            </div>
           </div>
         </div>
 
